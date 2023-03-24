@@ -8,7 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
+// dodano testowy komentarz
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
