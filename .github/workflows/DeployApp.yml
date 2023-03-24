@@ -1,0 +1,28 @@
+name: Deploy And Publish App 
+
+on: 
+  workflow_dispatch:
+  pull_request:
+    branches:
+    - Release
+  
+jobs:
+  publish:
+    runs-on: ununtu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with: 
+          dotnet-version: '6.0.x'
+          
+      - name: Restore
+        run: dotnet restore ./SocialNetworkService.sln
+        
+      - name: Build
+        run: dotnet build ./SocialNetworkService.sln --configuration Release --no-restore
+        
+      - name: Publish 
+        run: dotnet publish ./SocialNetworkService.sln --configuration Release --no-build
