@@ -19,10 +19,10 @@ jobs:
           dotnet-version: '6.0.x'
           
       - name: Restore
-        run: dotnet restore ./SocialNetworkService.sln
+        run: dotnet restore SocialNetworkService/SocialNetworkService.sln
         
       - name: Build
-        run: dotnet build ./SocialNetworkService.sln --configuration Release --no-restore
+        run: dotnet build SocialNetworkService/SocialNetworkService.sln --configuration Release --no-restore
         
       - name: Publish 
-        run: dotnet publish ./SocialNetworkService.sln --configuration Release --no-build
+        run: dotnet publish SocialNetworkService/SocialNetworkService.sln --configuration Release --no-build
