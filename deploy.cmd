@@ -38,6 +38,8 @@ IF NOT DEFINED NEXT_MANIFEST_PATH (
   )
 )
 
+SET DEPLOYMENT_TARGET=%HOME%\wwwroot\wwwroot
+
 IF NOT DEFINED KUDU_SYNC_CMD (
   :: Install kudu sync
   echo Installing Kudu Sync
@@ -48,7 +50,6 @@ IF NOT DEFINED KUDU_SYNC_CMD (
   SET KUDU_SYNC_CMD=%appdata%\npm\kuduSync.cmd
 )
 
-SET DEPLOYMENT_TARGET=%HOME%\wwwroot\wwwroot
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
