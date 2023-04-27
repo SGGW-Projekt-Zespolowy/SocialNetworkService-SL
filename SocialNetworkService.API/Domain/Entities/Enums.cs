@@ -8,10 +8,10 @@ namespace Domain.Entities
 {
     public enum Degree
     {
-        student, // student medycyny - np. student Jan Kowalski
-        lek, // lekarz medycyny - np. lek. Jan Kowalski
-        lekDent, // lekarz dentysta - np. lek. dent. Jan Kowalski
-        spec, // lekarz specjalista - np. lek. spec. Jan Kowalski
+        Student, // student medycyny - np. student Jan Kowalski
+        Lek, // lekarz medycyny - np. lek. Jan Kowalski
+        LekDent, // lekarz dentysta - np. lek. dent. Jan Kowalski
+        Spec, // lekarz specjalista - np. lek. spec. Jan Kowalski
         Dr, // Doktor nauk medycznych - np. Dr n. med. Jan Kowalski
         DrHab, // Doktor Hablitowany nauk medycznych - np. Dr hab. n. med. Jan Kowalski
         Prof, // Profesor doktor habilitowany nauk medycznych - np. Prof. dr hab. n. med. Jan Kowalski
@@ -21,11 +21,82 @@ namespace Domain.Entities
 
     public enum MedicalSpecialization
     {
-        alergologia, // alergologia
-        anestezjologia, // anestezjologia i intensywna terapia
-        angiologia, // angiologia
-        audiologiaFoniatria, // audiologia i foniatria
-        balneologiaIMedycynaFizykalna // balneologia i medycyna fizykalna
-
+        Alergologia,
+        AnestezjologiaIIntensywnaTerapia,
+        Angiologia,
+        AudiologiaIFoniatria,
+        BalneologiaIMedycynaFizykalna,
+        ChirurgiaDziecieca,
+        ChirurgiaKlatkiPiersiowej,
+        ChirurgiaNaczyniowa,
+        ChirurgiaOgolna,
+        ChirurgiaOnkologiczna,
+        ChirurgiaPlastyczna,
+        ChirurgiaSzczekowoTwarzowa,
+        ChorobyPluc,
+        ChorobyPlucDzieci,
+        ChorobyWewnetrzne,
+        ChorobyZakazne,
+        DermatologiaIWenerologia,
+        Diabetologia,
+        DiagnostykaLaboratoryjna,
+        Endokrynologia,
+        EndokrynologiaGinekologicznaIRozrodczosc,
+        EndokrynologiaIDiabetologiaDziecieca,
+        Epidemiologia,
+        FarmakologiaKliniczna,
+        Gastroenterologia,
+        GastroenterologiaDziecieca,
+        GenetykaKliniczna,
+        Geriatria,
+        GinekologiaOnkologiczna,
+        Hematologia,
+        Hipertensjologia,
+        ImmunologiaKliniczna,
+        IntensywnaTerapia,
+        Kardiochirurgia,
+        Kardiologia,
+        KardiologiaDziecieca,
+        MedycynaLotnicza,
+        MedycynaMorskaITropikalna,
+        MedycynaNuklearna,
+        MedycynaPaliatywna,
+        MedycynaPracy,
+        MedycynaRatunkowa,
+        MedycynaRodzinna,
+        MedycynaSadowa,
+        MedycynaSportowa,
+        MikrobiologiaLekarska,
+        Nefrologia,
+        NefrologiaDziecieca,
+        Neonatologia,
+        Neurochirurgia,
+        Neurologia,
+        NeurologiaDziecieca,
+        Neuropatologia,
+        Okulistyka,
+        OnkologiaIHematologiaDziecieca,
+        OnkologiaKliniczna,
+        OrtopediaITraumatologiaNarzaduRuchu,
+        Otorynolaryngologia,
+        OtorynolaryngologiaDziecieca,
+        Patomorfologia,
+        Pediatria,
+        PediatriaMetaboliczna,
+        Perinatologia,
+        PoloznictwoIGinekologia,
+        Psychiatria,
+        PsychiatriaDzieciIMlodziezy,
+        RadiologiaIDiagnostykaObrazowa,
+        RadioterapiaOnkologiczna,
+        RehabilitacjaMedyczna,
+        Reumatologia,
+        Seksuologia,
+        ToksykologiaKliniczna,
+        TransfuzjologiaKliniczna,
+        TransplantologiaKliniczna,
+        Urologia,
+        UrologiaDziecieca,
+        ZdrowiePubliczne
     }
 }
