@@ -99,4 +99,15 @@ namespace Domain.Entities
         UrologiaDziecieca,
         ZdrowiePubliczne
     }
+
+    public enum BadgeValue
+    {
+
+    }
+
+    public enum ReactionType
+    {
+        Like, 
+        Dislike
+    }
 }
