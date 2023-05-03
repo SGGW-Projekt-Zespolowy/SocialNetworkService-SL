@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class Publication: Entity
+    public sealed class Publication : Entity
     {
         public Publication(Guid id, Guid authorId, string title, string content, string link, string picture, Specialization type)
             :base(id)
@@ -20,6 +20,6 @@ namespace Domain.Entities
         public string Content { get; set; }
         public string Link { get; set; }
         public string Picture { get; set; }
-        public Specialization Type { get; set; }
+        public MedicalSpecialization Type { get; set; }
     }
 }
