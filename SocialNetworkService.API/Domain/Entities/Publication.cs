@@ -1,9 +1,4 @@
 ﻿using Domain.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
@@ -23,7 +18,7 @@ namespace Domain.Entities
         public string Title { get; set; }
         public string Context { get; set; }
         public string Link { get; set; }
-        public byte[] Picture { get; set; }
+        public string Picture { get; set; }
         public MedicalSpecialization Type { get; set; }
     }
 }
