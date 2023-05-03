@@ -4,7 +4,7 @@ namespace Domain.Entities
 {
     public sealed class Publication : Entity
     {
-        public Publication(Guid id, Guid authorId, string title, string content, string link, string picture, Specialization type)
+        public Publication(Guid id, Guid authorId, string title, string content, string link, string picture, MedicalSpecialization type)
             :base(id)
         {
             AuthorId = authorId;
