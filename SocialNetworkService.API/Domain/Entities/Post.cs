@@ -4,7 +4,7 @@ namespace Domain.Entities
 {
     public sealed class Post : Entity
     {
-        public Post(Guid id, Guid authorId, DateTime creationDate, string content, Type type, string title, DateTime modificationDate) : base(id)
+        public Post(Guid id, Guid authorId, DateTime creationDate, string content, MedicalSpecialization type, string title, DateTime modificationDate) : base(id)
         {
             AuthorId = authorId;
             CreationDate = creationDate;
