@@ -23,7 +23,7 @@ namespace Domain.ValueObjects
             if (string.IsNullOrEmpty(email))
                 return Result.Failure<Email>(new Error(
                     "Email.Empty",
-                    "Email was empty"));
+                    "Email is empty"));
 
             if (email.Length > MaxEmailLenght)
                 return Result.Failure<Email>(new Error(
