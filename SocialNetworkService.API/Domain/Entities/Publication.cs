@@ -4,8 +4,8 @@ namespace Domain.Entities
 {
     public sealed class Publication : Entity
     {
-        public Publication(Guid id, Guid authorId, string title, string content, string link, string picture, MedicalSpecialization type)
-            :base(id)
+        public Publication(Guid id, Guid authorId, string title, string content, string link, string picture, MedicalSpecialization type, DateTime modificationDate)
+            : base(id)
         {
             AuthorId = authorId;
             Title = title;
@@ -13,6 +13,8 @@ namespace Domain.Entities
             Link = link;
             Picture = picture;
             Type = type;
+            ModificationDate = modificationDate;
+            CreationDate = DateTime.Now;
         }
 
         public Guid AuthorId { get; set; }
@@ -21,5 +23,11 @@ namespace Domain.Entities
         public string Link { get; set; }
         public string Picture { get; set; }
         public MedicalSpecialization Type { get; set; }
+        public DateTime CreationDate { get; init; }
+        public DateTime ModificationDate { get; set; }
+        public List<CoAuthor> CoAuthors { get; } = new List<CoAuthor>();
+        public List<Hashtag> Hashtags { get; } = new List<Hashtag>();
+        public List<Reaction> Reactions { get; } = new List<Reaction>();
+        public List<Comment> Comments { get; } = new List<Comment>();
     }
 }
