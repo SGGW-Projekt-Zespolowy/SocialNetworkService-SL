@@ -110,9 +110,4 @@ namespace Domain.Entities
         Like, 
         Dislike
     }
-
-    public enum PublicationOrPostType
-    {
-
-    }
 }
