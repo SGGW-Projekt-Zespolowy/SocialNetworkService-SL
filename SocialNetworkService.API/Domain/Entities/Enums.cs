@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public enum Degree
+    public enum DegreeEnum
     {
         Student, // student medycyny - np. student Jan Kowalski
         Lek, // lekarz medycyny - np. lek. Jan Kowalski
@@ -100,14 +100,19 @@ namespace Domain.Entities
         ZdrowiePubliczne
     }
 
-    public enum BadgeValue
+    public enum BadgeEnum
     {
 
     }
 
-    public enum ReactionType
+    public enum ReactionTypeEnum
     {
         Like, 
         Dislike
+    }
+
+    public enum PublicationOrPostType
+    {
+
     }
 }
