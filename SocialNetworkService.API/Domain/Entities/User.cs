@@ -3,7 +3,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
-    public sealed class User : Entity
+    public sealed class User : AggregateRoot
     {
         public User(Guid id, Email email, DateTime lastLoginDate,
             DateTime registrationDate, FirstName firstName, LastName lastName,

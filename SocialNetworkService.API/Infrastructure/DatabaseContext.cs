@@ -18,22 +18,22 @@ namespace Infrastructure
                 builder.ToTable("Users");   
                 builder.HasKey(k=>k.Id);
                 builder.HasMany<Specialization>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(specialization => specialization.AuthorId).IsRequired();
                 builder.HasMany<Contact>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(contact => contact.UserId).IsRequired();
                 builder.HasMany<Follower>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(follower => follower.FollowerId).IsRequired();
                 builder.HasMany<Publication>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(publication => publication.AuthorId).IsRequired();
                 builder.HasMany<Post>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(post => post.AuthorId).IsRequired();
                 builder.HasMany<Badge>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(badge => badge.AuthorId).IsRequired();
             });
 
@@ -55,16 +55,16 @@ namespace Infrastructure
                 builder.ToTable("Publications");
                 builder.HasKey(k => k.Id);
                 builder.HasMany<CoAuthor>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(coAuthor => coAuthor.PublicationId).IsRequired();
                 builder.HasMany<Hashtag>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(hashtag => hashtag.RelatedItemId).IsRequired();
                 builder.HasMany<Reaction>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(reaction => reaction.RelatedItemId).IsRequired();
                 builder.HasMany<Comment>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(comment => comment.ParentPostId).IsRequired();
             });
 
@@ -73,13 +73,13 @@ namespace Infrastructure
                 builder.ToTable("Posts");
                 builder.HasKey(k => k.Id);
                 builder.HasMany<Hashtag>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(hashtag => hashtag.RelatedItemId).IsRequired();
                 builder.HasMany<Reaction>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(reaction => reaction.RelatedItemId).IsRequired();
                 builder.HasMany<Comment>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(comment => comment.ParentPostId).IsRequired();
             });
 
@@ -115,10 +115,10 @@ namespace Infrastructure
                 builder.ToTable("Comments");
                 builder.HasKey(k => k.Id);
                 builder.HasMany<Reaction>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(reaction => reaction.RelatedItemId).IsRequired();
                 builder.HasMany<Comment>()
-                .WithOne()
+                .WithOne().OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(comment => comment.ParentCommentId).IsRequired()
                 .HasForeignKey(comment => comment.ParentPostId).IsRequired();
             });
