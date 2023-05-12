@@ -19,7 +19,7 @@ namespace Domain.Entities
         MDPhd, // Medical Doctor Philosophy Doctor - odpowiednik doktora nauk medycznych - np. Jan Kowalski, MD PhD
     }
 
-    public enum MedicalSpecialization
+    public enum MedicalSpecializationEnum
     {
         Alergologia,
         AnestezjologiaIIntensywnaTerapia,
