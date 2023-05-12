@@ -6,7 +6,6 @@ namespace Domain.ValueObjects
 {
     public class Degree : ValueObject
     {
-        public const int MaxDegreeLength = 50;
         private Degree(string value)
         {
             Value = value;
@@ -24,11 +23,6 @@ namespace Domain.ValueObjects
                 return Result.Failure<Degree>(new Error(
                     "Degree.Empty",
                     "Degree of user is empty."));
-
-            if (degree.Length > MaxDegreeLength)
-                return Result.Failure<Degree>(new Error(
-                    "Degree.TooLongName",
-                    "Degree of user is too long."));
 
             if (!Enum.IsDefined(typeof(DegreeEnum), degree))
                 return Result.Failure<Degree>(new Error(
