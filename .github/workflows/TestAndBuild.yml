@@ -1,0 +1,28 @@
+name: Build And Test App
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: 
+        - Development
+        - Test
+        - Preprod
+        - Release
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with: 
+          dotnet-version: '6.0.x'
+          
+      - name: Restore
+        run: dotnet restore SocialNetworkService.API/SocialNetworkService.API.sln
+        
+      - name: Build
+        run: dotnet build SocialNetworkService.API/SocialNetworkService.API.sln --configuration Release --no-restore

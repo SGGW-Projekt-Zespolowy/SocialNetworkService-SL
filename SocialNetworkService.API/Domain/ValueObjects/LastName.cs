@@ -18,7 +18,7 @@ namespace Domain.ValueObjects
         }
         public Result<LastName> Create(string lastName)
         {
-            if (string.IsNullOrEmpty(Value))
+            if (string.IsNullOrEmpty(lastName))
                 return Result.Failure<LastName>(new Error(
                         "LastName.Empty",
                         "First name is empty"));

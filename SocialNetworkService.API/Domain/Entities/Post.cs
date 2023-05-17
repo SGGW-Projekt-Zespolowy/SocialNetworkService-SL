@@ -17,7 +17,7 @@ namespace Domain.Entities
         public Guid AuthorId { get; set; }
         public DateTime CreationDate { get; init; }
         public string Content { get; set; }
-        public MedicalSpecialization Type { get; set; }
+        public ValueObjects.MedicalSpecialization Type { get; set; }
         public string Title { get; set; }
         public DateTime ModificationDate { get; set; }
         public List<Hashtag> Hashtags { get; } = new List<Hashtag>();

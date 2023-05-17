@@ -1,6 +1,6 @@
 ﻿namespace Domain.Primitives
 {
-    public abstract class ValueObject
+    public abstract class ValueObject : IEquatable<ValueObject>
     {
         public abstract IEnumerable<object> GetAtomicValues();
         public bool Equals(ValueObject? other)
