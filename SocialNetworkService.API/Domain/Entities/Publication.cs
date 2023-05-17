@@ -5,7 +5,7 @@ namespace Domain.Entities
 {
     public sealed class Publication : Entity
     {
-        public Publication(Guid id, Guid authorId, Title title, string content, Link link, string picture, ValueObjects.MedicalSpecialization type)
+        public Publication(Guid id, Guid authorId, Title title, string content, Link link, string picture, MedicalSpecialization type, DateTime modificationDate)
             :base(id)
         {
             AuthorId = authorId;
@@ -30,6 +30,5 @@ namespace Domain.Entities
         public List<Hashtag> Hashtags { get; } = new List<Hashtag>();
         public List<Reaction> Reactions { get; } = new List<Reaction>();
         public List<Comment> Comments { get; } = new List<Comment>();
-        public ValueObjects.MedicalSpecialization Type { get; set; }
     }
 }

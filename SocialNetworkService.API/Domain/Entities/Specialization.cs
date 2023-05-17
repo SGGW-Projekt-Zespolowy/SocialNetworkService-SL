@@ -4,12 +4,13 @@ namespace Domain.Entities
 {
     public sealed class Specialization : Entity
     {
-        public Specialization(Guid id, MedicalSpecializationEnum specialization) : base(id)
+        public Specialization(Guid id, MedicalSpecializationEnum specialization, Guid authorId) : base(id)
         {
-            this.MedicalSpecialization = specialization;
+            MedicalSpecialization = specialization;
             AuthorId = authorId;
         }
 
-        public MedicalSpecializationEnum specialization { get; set; }
+        public MedicalSpecializationEnum MedicalSpecialization { get; set; }
+        public Guid AuthorId { get; set; }
     }
 }
