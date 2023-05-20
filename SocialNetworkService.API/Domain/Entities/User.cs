@@ -5,20 +5,20 @@ namespace Domain.Entities
 {
     public sealed class User : AggregateRoot
     {
-        public User(Guid id, Email email, DateTime lastLoginDate,
-            DateTime registrationDate, FirstName firstName, LastName lastName,
-            DateTime dateOfBirth, Degree degree, bool isVerified, string profilePicture) :
+        public User(Guid id, Email email,
+            FirstName firstName, LastName lastName,
+            DateTime dateOfBirth, Degree degree, string profilePicture) :
             base(id)
         {
             Email = email;
-            LastLoginDate = lastLoginDate;
-            RegistrationDate = registrationDate;
+            LastLoginDate = DateTime.Now;
+            RegistrationDate = DateTime.Now;
             FirstName = firstName;
             LastName = lastName;
             DateOfBirth = dateOfBirth;
             CreationDate = DateTime.Now;
             Degree = degree;
-            IsVerified = isVerified;
+            IsVerified = false;
             ProfilePicture = profilePicture;
         }
         public Email Email { get; set; }

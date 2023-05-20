@@ -17,7 +17,7 @@ namespace Domain.ValueObjects
         {
             yield return Value;
         }
-        public Result<Degree> Create(string degree)
+        public static Result<Degree> Create(string degree)
         {
             if (string.IsNullOrEmpty(degree))
                 return Result.Failure<Degree>(new Error(
