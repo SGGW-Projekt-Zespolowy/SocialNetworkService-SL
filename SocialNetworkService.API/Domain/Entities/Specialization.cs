@@ -9,7 +9,7 @@ namespace Domain.Entities
             MedicalSpecialization = specialization;
             AuthorId = authorId;
         }
-
+        private Specialization() { }
         public MedicalSpecializationEnum MedicalSpecialization { get; set; }
         public Guid AuthorId { get; set; }
     }

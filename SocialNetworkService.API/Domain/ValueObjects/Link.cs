@@ -14,13 +14,14 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
+        private Link() { }
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;
         }
 
         public string Value { get; }
-
+        public static implicit operator string(Link link) => link.Value ?? string.Empty;
         public Result<Link> Create(string link)
         {
             if (string.IsNullOrEmpty(link))

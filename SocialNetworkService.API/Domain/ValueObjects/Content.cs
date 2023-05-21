@@ -11,8 +11,9 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
-
+        private Content() { }
         public string Value { get; }
+        public static implicit operator string(Content content) => content.Value ?? string.Empty;
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;

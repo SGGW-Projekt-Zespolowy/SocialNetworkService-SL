@@ -10,9 +10,9 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
-
+        private Degree() { }
         public string Value { get; }
-
+        public static implicit operator string(Degree degree) => degree.Value ?? string.Empty;
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;

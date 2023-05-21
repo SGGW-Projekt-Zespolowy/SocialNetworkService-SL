@@ -1,9 +1,8 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.ValueObjects;
 
 namespace Application.Users.Commands.CreateUser
 {
-    public sealed record CreateMemberCommand(        
+    public sealed record CreateUserCommand(        
         string email,
         string firstName,
         string lastName,
