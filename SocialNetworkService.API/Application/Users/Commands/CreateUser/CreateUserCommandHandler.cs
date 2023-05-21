@@ -7,7 +7,7 @@ using Domain.ValueObjects;
 
 namespace Application.Users.Commands.CreateUser
 {
-    public sealed class CreateUserCommandHandler: ICommandHandler<CreateMemberCommand>
+    public sealed class CreateUserCommandHandler: ICommandHandler<CreateUserCommand>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -18,7 +18,7 @@ namespace Application.Users.Commands.CreateUser
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var emailResult = Email.Create(request.email);
             var firstName = FirstName.Create(request.firstName);
@@ -32,7 +32,7 @@ namespace Application.Users.Commands.CreateUser
             _userRepository.Add(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return Result.Success(user);
+            return Result.Success();
         }
         
     }

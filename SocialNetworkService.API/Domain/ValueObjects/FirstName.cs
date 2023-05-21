@@ -10,7 +10,9 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
+        private FirstName() { }
         public string Value { get; }
+        public static implicit operator string(FirstName firstName) => firstName.Value ?? string.Empty;
         public static Result<FirstName> Create(string firstName)
         {
             if (string.IsNullOrEmpty(firstName))            

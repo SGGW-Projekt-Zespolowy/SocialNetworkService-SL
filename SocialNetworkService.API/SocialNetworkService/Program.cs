@@ -1,9 +1,12 @@
 using Application;
 using Infrastructure;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Presentation;
-using Serilog;
+//using Serilog;
+using MediatR;
+using Domain.Repositories;
+using Infrastructure.Repositories;
+using Application.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +23,8 @@ builder.Services
     .AddInfrastructure()
     .AddPresentation();
 
-builder.Host.UseSerilog((context, configuration) =>
-    configuration.ReadFrom.Configuration(context.Configuration));
+//builder.Host.UseSerilog((context, configuration) =>
+//    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddCors(options =>
 {
@@ -46,7 +49,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseSerilogRequestLogging();
+//app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 app.UseCors();

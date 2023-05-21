@@ -17,7 +17,7 @@ namespace Domain.Entities
             ModificationDate = modificationDate;
             CreationDate = DateTime.Now;
         }
-
+        private Publication() { }
         public Guid AuthorId { get; set; }
         public Title Title { get; set; }
         public string Content { get; set; }

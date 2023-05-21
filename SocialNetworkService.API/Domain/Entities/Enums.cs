@@ -8,6 +8,7 @@ namespace Domain.Entities
 {
     public enum DegreeEnum
     {
+        Default,
         Student, // student medycyny - np. student Jan Kowalski
         Lek, // lekarz medycyny - np. lek. Jan Kowalski
         LekDent, // lekarz dentysta - np. lek. dent. Jan Kowalski

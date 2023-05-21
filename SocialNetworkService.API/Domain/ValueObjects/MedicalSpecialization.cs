@@ -12,14 +12,17 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
+        private MedicalSpecialization() { }
 
-        public string Value { get; }
+        public string Value { get; private set; }
+
+        public static implicit operator string(MedicalSpecialization spec) => spec.Value ?? string.Empty;
 
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;
         }
-        public Result<MedicalSpecialization> Create(string medicalSpecialization)
+        public static Result<MedicalSpecialization> Create(string medicalSpecialization)
         {
             if (string.IsNullOrEmpty(medicalSpecialization))
                 return Result.Failure<MedicalSpecialization>(new Error(

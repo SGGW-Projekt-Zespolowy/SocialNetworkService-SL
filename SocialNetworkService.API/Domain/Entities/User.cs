@@ -21,6 +21,7 @@ namespace Domain.Entities
             IsVerified = false;
             ProfilePicture = profilePicture;
         }
+        private User() { }
         public Email Email { get; set; }
         public DateTime LastLoginDate { get; set; }
         public DateTime RegistrationDate { get; set; }

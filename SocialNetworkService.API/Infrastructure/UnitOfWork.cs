@@ -1,11 +1,9 @@
 ﻿
 using Application.Abstractions;
-using Domain.Primitives;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Infrastructure
 {
-    internal sealed class UnitOfWork: IUnitOfWork
+    public sealed class UnitOfWork: IUnitOfWork
     {
         private readonly DatabaseContext _dbContext;
 
