@@ -2,7 +2,7 @@
 
 namespace Domain.Entities
 {
-    public class Comment : Entity
+    public class Comment : AggregateRoot
     {
         public Comment(Guid id, Guid authorId, string content, DateTime modificationDate, Guid parentPostId, Guid parentCommentId, bool relatedToComment) : base(id)
         {
@@ -22,5 +22,7 @@ namespace Domain.Entities
         public Guid ParentPostId { get; set; }
         public Guid ParentCommentId { get; set; }
         public bool RelatedToComment { get; set; }
+        public List<Reaction> Reactions { get; } = new List<Reaction>();
+        public List<Comment> Comments { get; } = new List<Comment>();
     }
 }
