@@ -7,6 +7,12 @@ namespace Infrastructure.Repositories
     internal class PublicationRepository : IPublicationRepository
     {
         private readonly DatabaseContext _dbContext;
+
+        public PublicationRepository(DatabaseContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void Add(Publication publication)
         {
             _dbContext.Set<Publication>().Add(publication);

@@ -9,6 +9,11 @@ namespace Infrastructure.Repositories
     {
         private readonly DatabaseContext _dbContext;
 
+        public CommentRepository(DatabaseContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void Add(Comment comment)
         {
             _dbContext.Set<Comment>().Add(comment);

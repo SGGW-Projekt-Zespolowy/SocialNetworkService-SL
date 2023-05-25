@@ -7,6 +7,12 @@ namespace Infrastructure.Repositories
     internal class PostRepository : IPostRepository
     {
         private readonly DatabaseContext _dbContext;
+
+        public PostRepository(DatabaseContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public void Add(Post post)
         {
             _dbContext.Set<Post>().Add(post);
