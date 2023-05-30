@@ -11,6 +11,7 @@ namespace Domain.Entities
         }
 
         public Guid AuthorId { get; set; }
+        public User User { get; private set; }
         public BadgeEnum Name { get; set; }
     }
 }

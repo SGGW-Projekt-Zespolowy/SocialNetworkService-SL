@@ -11,13 +11,8 @@ namespace Infrastructure.Configurations
         {
             builder.ToTable("Comments");
             builder.HasKey(k => k.Id);
-            builder.HasMany<Reaction>()
-            .WithOne().OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(reaction => reaction.RelatedItemId).IsRequired();
-            builder.HasMany<Comment>()
-            .WithOne().OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(comment => comment.ParentCommentId).IsRequired()
-            .HasForeignKey(comment => comment.ParentPostId).IsRequired();
+            builder.HasOne(x => x.ParentPost).WithMany(y => y.Comments).HasForeignKey(z => z.ParentPostId);
+            builder.HasOne(x => x.ParentComment).WithMany(y => y.Comments).HasForeignKey(z => z.ParentCommentId);
         }
     }
 }

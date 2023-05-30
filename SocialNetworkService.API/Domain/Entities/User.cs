@@ -38,6 +38,6 @@ namespace Domain.Entities
         public List<Publication> Publications { get; } = new List<Publication>();
         public List<Post> Posts { get; } = new List<Post>();
         public List<Badge> Badges { get; } = new List<Badge>();
-        
+        public List<CoAuthor> CoAuthors { get; } = new List<CoAuthor>();
     }
 }

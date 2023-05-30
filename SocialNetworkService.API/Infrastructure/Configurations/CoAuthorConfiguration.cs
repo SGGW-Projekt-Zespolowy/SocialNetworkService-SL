@@ -11,7 +11,9 @@ namespace Infrastructure.Configurations
         {
             builder.ToTable("CoAuthors");
             builder.HasKey(k => k.Id);
-            builder.HasIndex(a => new { a.AuthorId, a.PublicationId }).IsUnique();
+            builder.HasIndex(a => new { a.UserId, a.PublicationId }).IsUnique();
+            builder.HasOne(x => x.Publication).WithMany(y => y.CoAuthors).HasForeignKey(z => z.PublicationId);
+            builder.HasOne(x => x.User).WithMany(y => y.CoAuthors).HasForeignKey(z => z.UserId);
         }
     }
 }

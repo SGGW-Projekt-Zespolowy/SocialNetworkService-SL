@@ -14,6 +14,7 @@ namespace Infrastructure.Configurations
             builder.HasIndex(i => new { i.MedicalSpecialization, i.AuthorId }).IsUnique();
             builder.Property(x => x.MedicalSpecialization).HasConversion(c => c.ToString(),
                 c => (MedicalSpecializationEnum)Enum.Parse(typeof(MedicalSpecializationEnum), c));
+            builder.HasOne(x => x.User).WithMany(y => y.Specializations).HasForeignKey(z => z.AuthorId);
         }
     }
 }

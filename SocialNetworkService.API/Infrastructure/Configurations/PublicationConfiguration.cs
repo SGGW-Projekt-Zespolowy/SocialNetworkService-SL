@@ -11,21 +11,10 @@ namespace Infrastructure.Configurations
         {
             builder.ToTable("Publications");
             builder.HasKey(k => k.Id);
-            builder.HasMany<CoAuthor>()
-            .WithOne().OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(coAuthor => coAuthor.PublicationId).IsRequired();
-            builder.HasMany<Hashtag>()
-            .WithOne().OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(hashtag => hashtag.RelatedItemId).IsRequired();
-            builder.HasMany<Reaction>()
-            .WithOne().OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(reaction => reaction.RelatedItemId).IsRequired();
-            builder.HasMany<Comment>()
-            .WithOne().OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(comment => comment.ParentPostId).IsRequired();
             builder.OwnsOne(x => x.Title);
             builder.OwnsOne(x => x.Link);
             builder.OwnsOne(x => x.Type);
+            builder.HasOne(x => x.Author).WithMany(y => y.Publications).OnDelete(DeleteBehavior.Cascade).HasForeignKey(z => z.AuthorId);
         }
     }
 }

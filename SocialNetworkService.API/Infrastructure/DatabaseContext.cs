@@ -1,6 +1,4 @@
-﻿using Domain.Entities;
-using Domain.Primitives;
-using Domain.ValueObjects;
+﻿using Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure
@@ -15,7 +13,7 @@ namespace Infrastructure
 
         public new DbSet<TEntity> Set<TEntity>()
             where TEntity : Entity
-            => base.Set<TEntity>();
+            => base.Set<TEntity>();       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

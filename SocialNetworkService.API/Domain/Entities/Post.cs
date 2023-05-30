@@ -22,7 +22,7 @@ namespace Domain.Entities
         public MedicalSpecialization Type { get; set; } = MedicalSpecialization.Create("Default").Value;
         public string Title { get; set; } = string.Empty;
         public DateTime ModificationDate { get; set; } = DateTime.Now;
-        public List<Hashtag> Hashtags { get; } = new List<Hashtag>();
+        public User Author { get; set; }
         public List<Reaction> Reactions { get; } = new List<Reaction>();
         public List<Comment> Comments { get; } = new List<Comment>();
     }

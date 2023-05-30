@@ -11,6 +11,7 @@ namespace Domain.Entities
         }
         private Specialization() { }
         public MedicalSpecializationEnum MedicalSpecialization { get; set; }
+        public User User { get; private set; }
         public Guid AuthorId { get; set; }
     }
 }

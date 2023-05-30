@@ -12,6 +12,7 @@ namespace Infrastructure.Configurations
             builder.ToTable("Followers");
             builder.HasKey(k => k.Id);
             builder.HasIndex(f => new { f.FollowerId, f.FollowedUserId }).IsUnique();
+            builder.HasOne(x => x.FollowedUser).WithMany(y => y.Followers).HasForeignKey(z => z.FollowedUserId);
         }
     }
 }

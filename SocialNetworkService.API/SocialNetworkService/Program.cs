@@ -3,10 +3,6 @@ using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Presentation;
 //using Serilog;
-using MediatR;
-using Domain.Repositories;
-using Infrastructure.Repositories;
-using Application.Abstractions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +12,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DatabaseContext>(
-    x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                        sqlServerOptionsAction: sqlOptions => { sqlOptions.EnableRetryOnFailure(); })
+    );
 
 builder.Services
     .AddApplication()

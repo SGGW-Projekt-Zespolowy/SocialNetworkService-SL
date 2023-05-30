@@ -23,12 +23,11 @@ namespace Domain.Entities
         public string Content { get; set; }
         public Link Link { get; set; }
         public string Picture { get; set; }
+        public User Author { get; set; }
         public MedicalSpecialization Type { get; set; }
         public DateTime CreationDate { get; init; }
         public DateTime ModificationDate { get; set; }
         public List<CoAuthor> CoAuthors { get; } = new List<CoAuthor>();
-        public List<Hashtag> Hashtags { get; } = new List<Hashtag>();
-        public List<Reaction> Reactions { get; } = new List<Reaction>();
         public List<Comment> Comments { get; } = new List<Comment>();
     }
 }

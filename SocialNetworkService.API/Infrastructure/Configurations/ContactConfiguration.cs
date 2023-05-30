@@ -12,6 +12,7 @@ namespace Infrastructure.Configurations
             builder.ToTable("Contacts");
             builder.HasKey(k => k.Id);
             builder.HasIndex(c => new { c.UserId, c.ContactId }).IsUnique();
+            builder.HasOne(x => x.User).WithMany(y => y.Contacts).HasForeignKey(z => z.UserId);            
         }
     }
 }

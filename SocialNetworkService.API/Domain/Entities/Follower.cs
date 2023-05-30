@@ -8,9 +8,15 @@ namespace Domain.Entities
         {
             FollowerId = followerId;
             FollowedUserId = followedUserId;
-        }
-
+        }        
+        /// <summary>
+        /// the person that is following
+        /// </summary>
         public Guid FollowerId { get; set; }
+        /// <summary>
+        /// the person that is followed
+        /// </summary>
         public Guid FollowedUserId { get; set; }
+        public User FollowedUser { get; set; }
     }
 }
