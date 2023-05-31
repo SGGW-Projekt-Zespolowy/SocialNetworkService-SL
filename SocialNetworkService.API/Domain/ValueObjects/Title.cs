@@ -18,7 +18,7 @@ namespace Domain.ValueObjects
             yield return Value;
         }
 
-        public Result<Title> Create(string title)
+        public static Result<Title> Create(string title)
         {
             if (string.IsNullOrEmpty(title))
                 return Result.Failure<Title>(new Error(

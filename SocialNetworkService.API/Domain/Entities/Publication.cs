@@ -19,11 +19,11 @@ namespace Domain.Entities
         }
         private Publication() { }
         public Guid AuthorId { get; set; }
+        public User Author { get; set; }
         public Title Title { get; set; }
         public string Content { get; set; }
         public Link Link { get; set; }
-        public string Picture { get; set; }
-        public User Author { get; set; }
+        public string Picture { get; set; }        
         public MedicalSpecialization Type { get; set; }
         public DateTime CreationDate { get; init; }
         public DateTime ModificationDate { get; set; }

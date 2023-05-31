@@ -35,12 +35,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("AuthorId", "Name")
                         .IsUnique();
@@ -54,22 +49,17 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AuthorId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("PublicationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PublicationId1")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PublicationId");
 
-                    b.HasIndex("PublicationId1");
-
-                    b.HasIndex("AuthorId", "PublicationId")
+                    b.HasIndex("UserId", "PublicationId")
                         .IsUnique();
 
                     b.ToTable("CoAuthors", (string)null);
@@ -82,6 +72,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CommentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -111,7 +104,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentPostId");
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("PostId");
 
@@ -132,12 +125,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("ContactId");
 
                     b.HasIndex("UserId", "ContactId")
                         .IsUnique();
@@ -180,12 +170,9 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("FollowerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("FollowedUserId");
 
                     b.HasIndex("FollowerId", "FollowedUserId")
                         .IsUnique();
@@ -203,22 +190,10 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PublicationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("RelatedItemId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("PublicationId");
-
-                    b.HasIndex("RelatedItemId");
 
                     b.HasIndex("Name", "RelatedItemId")
                         .IsUnique();
@@ -249,14 +224,13 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Posts", (string)null);
                 });
@@ -277,6 +251,10 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ModificationDate")
                         .HasColumnType("datetime2");
 
@@ -284,14 +262,17 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Publications", (string)null);
                 });
@@ -308,9 +289,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid?>("PostId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PublicationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ReactionType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -321,10 +299,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PostId");
-
-                    b.HasIndex("PublicationId");
-
-                    b.HasIndex("RelatedItemId");
 
                     b.ToTable("Reactions", (string)null);
                 });
@@ -342,14 +316,9 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("UserId");
 
                     b.HasIndex("MedicalSpecialization", "AuthorId")
                         .IsUnique();
@@ -369,11 +338,27 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Degree")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("LastLoginDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePicture")
                         .IsRequired()
@@ -389,49 +374,39 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Badge", b =>
                 {
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany()
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Badges")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany("Badges")
-                        .HasForeignKey("UserId");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.CoAuthor", b =>
                 {
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany()
+                    b.HasOne("Domain.Entities.Publication", "Publication")
+                        .WithMany("CoAuthors")
                         .HasForeignKey("PublicationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany("CoAuthors")
-                        .HasForeignKey("PublicationId1");
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Publication");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
                     b.HasOne("Domain.Entities.Comment", null)
-                        .WithMany()
-                        .HasForeignKey("ParentPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Post", null)
-                        .WithMany()
-                        .HasForeignKey("ParentPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany()
-                        .HasForeignKey("ParentPostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Comments")
+                        .HasForeignKey("CommentId");
 
                     b.HasOne("Domain.Entities.Post", null)
                         .WithMany("Comments")
@@ -444,149 +419,62 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Contact", b =>
                 {
-                    b.HasOne("Domain.Entities.User", null)
+                    b.HasOne("Domain.Entities.User", "ContactUser")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", null)
+                    b.HasOne("Domain.Entities.User", "User")
                         .WithMany("Contacts")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("ContactUser");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Follower", b =>
                 {
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("FollowerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.User", null)
+                    b.HasOne("Domain.Entities.User", "FollowedUser")
                         .WithMany("Followers")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Hashtag", b =>
-                {
-                    b.HasOne("Domain.Entities.Post", null)
-                        .WithMany("Hashtags")
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany("Hashtags")
-                        .HasForeignKey("PublicationId");
-
-                    b.HasOne("Domain.Entities.Post", null)
-                        .WithMany()
-                        .HasForeignKey("RelatedItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("FollowedUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany()
-                        .HasForeignKey("RelatedItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Domain.Entities.User", "FollowerUser")
+                        .WithMany("FollowedByMeUsers")
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("FollowedUser");
+
+                    b.Navigation("FollowerUser");
                 });
 
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.User", null)
+                    b.HasOne("Domain.Entities.User", "Author")
                         .WithMany("Posts")
-                        .HasForeignKey("UserId");
-
-                    b.OwnsOne("Domain.ValueObjects.MedicalSpecialization", "Type", b1 =>
-                        {
-                            b1.Property<Guid>("PostId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("PostId");
-
-                            b1.ToTable("Posts");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PostId");
-                        });
-
-                    b.Navigation("Type")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("Domain.Entities.Publication", b =>
                 {
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.User", null)
+                    b.HasOne("Domain.Entities.User", "Author")
                         .WithMany("Publications")
-                        .HasForeignKey("UserId");
-
-                    b.OwnsOne("Domain.ValueObjects.MedicalSpecialization", "Type", b1 =>
-                        {
-                            b1.Property<Guid>("PublicationId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("PublicationId");
-
-                            b1.ToTable("Publications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PublicationId");
-                        });
-
-                    b.OwnsOne("Domain.ValueObjects.Link", "Link", b1 =>
-                        {
-                            b1.Property<Guid>("PublicationId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("PublicationId");
-
-                            b1.ToTable("Publications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PublicationId");
-                        });
-
-                    b.OwnsOne("Domain.ValueObjects.Title", "Title", b1 =>
-                        {
-                            b1.Property<Guid>("PublicationId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("PublicationId");
-
-                            b1.ToTable("Publications");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PublicationId");
-                        });
-
-                    b.Navigation("Link")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Title")
-                        .IsRequired();
-
-                    b.Navigation("Type")
-                        .IsRequired();
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("Domain.Entities.Reaction", b =>
@@ -594,115 +482,27 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Post", null)
                         .WithMany("Reactions")
                         .HasForeignKey("PostId");
-
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany("Reactions")
-                        .HasForeignKey("PublicationId");
-
-                    b.HasOne("Domain.Entities.Comment", null)
-                        .WithMany()
-                        .HasForeignKey("RelatedItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Post", null)
-                        .WithMany()
-                        .HasForeignKey("RelatedItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany()
-                        .HasForeignKey("RelatedItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Specialization", b =>
                 {
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany()
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany("Specializations")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.User", null)
-                        .WithMany("Specializations")
-                        .HasForeignKey("UserId");
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.User", b =>
+            modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
-                    b.OwnsOne("Domain.ValueObjects.Degree", "Degree", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.OwnsOne("Domain.ValueObjects.Email", "Email", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.OwnsOne("Domain.ValueObjects.FirstName", "FirstName", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.OwnsOne("Domain.ValueObjects.LastName", "LastName", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("Degree")
-                        .IsRequired();
-
-                    b.Navigation("Email")
-                        .IsRequired();
-
-                    b.Navigation("FirstName")
-                        .IsRequired();
-
-                    b.Navigation("LastName")
-                        .IsRequired();
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Hashtags");
 
                     b.Navigation("Reactions");
                 });
@@ -712,10 +512,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("CoAuthors");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("Hashtags");
-
-                    b.Navigation("Reactions");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -723,6 +519,8 @@ namespace Infrastructure.Migrations
                     b.Navigation("Badges");
 
                     b.Navigation("Contacts");
+
+                    b.Navigation("FollowedByMeUsers");
 
                     b.Navigation("Followers");
 

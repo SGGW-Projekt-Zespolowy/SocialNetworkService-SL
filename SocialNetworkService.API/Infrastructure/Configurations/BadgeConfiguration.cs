@@ -13,7 +13,7 @@ namespace Infrastructure.Configurations
             builder.HasIndex(b => new { b.AuthorId, b.Name }).IsUnique();
             builder.Property(x => x.Name).HasConversion(
                 c => c.ToString(), c => (BadgeEnum)Enum.Parse(typeof(BadgeEnum),c));
-            builder.HasOne(x => x.User).WithMany(y => y.Badges).HasForeignKey(z => z.AuthorId);
+            builder.HasOne(x => x.User).WithMany(y => y.Badges).OnDelete(DeleteBehavior.NoAction).HasForeignKey(z => z.AuthorId);
         }
     }
 }

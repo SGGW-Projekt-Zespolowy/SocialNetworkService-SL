@@ -20,9 +20,7 @@ namespace Domain.Entities
         public DateTime CreationDate { get; init; }
         public DateTime ModificationDate { get; set; }
         public Guid ParentPostId { get; set; }
-        public Post ParentPost { get; private set; }
         public Guid ParentCommentId { get; set; }
-        public Comment ParentComment { get; set; }
         public List<Comment> Comments { get; set; }
         public bool RelatedToComment { get; set; }
     }

@@ -7,7 +7,7 @@ namespace Domain.ValueObjects
     public class Link : ValueObject
     {
         public const int MaxLinkLength = 60;
-        Regex linkRegex = new Regex(@"^(http|https)://[a-z0-9\-\.]+\.[a-z]{2,}/?.*$");
+        static Regex linkRegex = new Regex(@"^(http|https)://[a-z0-9\-\.]+\.[a-z]{2,}/?.*$");
 
 
         private Link(string value)
@@ -22,7 +22,7 @@ namespace Domain.ValueObjects
 
         public string Value { get; }
         public static implicit operator string(Link link) => link.Value ?? string.Empty;
-        public Result<Link> Create(string link)
+        public static Result<Link> Create(string link)
         {
             if (string.IsNullOrEmpty(link))
                 return Result.Failure<Link>(new Error(

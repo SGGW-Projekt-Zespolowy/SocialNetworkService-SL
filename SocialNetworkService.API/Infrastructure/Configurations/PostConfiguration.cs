@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,8 +11,9 @@ namespace Infrastructure.Configurations
         {
             builder.ToTable("Posts");
             builder.HasKey(k => k.Id);
-            builder.OwnsOne(x => x.Type);
-            builder.HasOne(x => x.Author).WithMany(y => y.Posts).HasForeignKey(z => z.AuthorId);
+            builder.Property(p => p.Type).HasConversion(c => c.Value, value => MedicalSpecialization.Create(value).Value);
+            builder.Property(p => p.Title).HasConversion(c => c.Value, value => Title.Create(value).Value);
+            builder.HasOne(x => x.Author).WithMany(y => y.Posts).OnDelete(DeleteBehavior.NoAction).HasForeignKey(z => z.AuthorId);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Domain.Entities
         /// the person that is following
         /// </summary>
         public Guid FollowerId { get; set; }
+        public User FollowerUser { get; set; }
         /// <summary>
         /// the person that is followed
         /// </summary>
