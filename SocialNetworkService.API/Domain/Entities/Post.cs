@@ -3,7 +3,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
-    public sealed class Post : Entity
+    public sealed class Post : AggregateRoot
     {
         public Post(Guid id, Guid authorId, string content, MedicalSpecialization type, Title title, DateTime modificationDate) : base(id)
         {

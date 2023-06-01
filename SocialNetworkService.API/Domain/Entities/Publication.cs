@@ -3,7 +3,7 @@ using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
-    public sealed class Publication : Entity
+    public sealed class Publication : AggregateRoot
     {
         public Publication(Guid id, Guid authorId, Title title, string content, Link link, string picture, MedicalSpecialization type, DateTime modificationDate)
             :base(id)
