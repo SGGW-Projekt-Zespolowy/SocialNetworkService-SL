@@ -22,8 +22,6 @@ namespace Infrastructure.Repositories
         {
             return await _dbContext.Set<Publication>()
                 .Include(x => x.CoAuthors)
-                .Include(x => x.Hashtags)
-                .Include(x => x.Reactions)
                 .Include(x => x.Comments)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }

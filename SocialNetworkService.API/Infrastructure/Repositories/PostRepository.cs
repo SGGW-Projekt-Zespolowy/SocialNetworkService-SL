@@ -21,8 +21,6 @@ namespace Infrastructure.Repositories
         public async Task<Post?> GetByIdWithAllAsync(Guid id)
         {
             return await _dbContext.Set<Post>()
-                .Include(x => x.Hashtags)
-                .Include(x => x.Reactions)
                 .Include(x => x.Comments)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }

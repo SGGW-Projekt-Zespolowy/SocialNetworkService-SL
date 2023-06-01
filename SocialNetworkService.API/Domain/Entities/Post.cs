@@ -22,8 +22,7 @@ namespace Domain.Entities
         public string Content { get; set; } = string.Empty;
         public MedicalSpecialization Type { get; set; } = MedicalSpecialization.Create("Default").Value;
         public Title Title { get; set; } = Title.Create(string.Empty).Value;
-        public DateTime ModificationDate { get; set; } = DateTime.Now;        
-        public List<Reaction> Reactions { get; } = new List<Reaction>();
+        public DateTime ModificationDate { get; set; } = DateTime.Now;
         public List<Comment> Comments { get; } = new List<Comment>();
     }
 }

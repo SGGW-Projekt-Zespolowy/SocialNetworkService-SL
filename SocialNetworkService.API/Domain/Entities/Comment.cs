@@ -24,6 +24,5 @@ namespace Domain.Entities
         public List<Comment> Comments { get; set; }
         public bool RelatedToComment { get; set; }
         public List<Reaction> Reactions { get; } = new List<Reaction>();
-        public List<Comment> Comments { get; } = new List<Comment>();
     }
 }
