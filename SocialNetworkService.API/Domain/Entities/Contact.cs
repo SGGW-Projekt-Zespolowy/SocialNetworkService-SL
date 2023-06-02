@@ -11,6 +11,8 @@ namespace Domain.Entities
         }
 
         public Guid UserId { get; set; }
-        public Guid ContactId { get; set; }
+        public User User { get; private set; }
+        public Guid ContactId { get; set; } 
+        public User ContactUser { get; set; }
     }
 }

@@ -4,13 +4,15 @@ namespace Domain.Entities
 {
     public sealed class CoAuthor : Entity
     {
-        public CoAuthor(Guid id, Guid authorId, Guid publicationId) : base(id)
+        public CoAuthor(Guid id, Guid userId, Guid publicationId) : base(id)
         {
-            AuthorId = authorId;
+            UserId = userId;
             PublicationId = publicationId;
         }
 
-        public Guid AuthorId { get; set; }
+        public Guid UserId { get; set; }
+        public User User { get; private set; }  
         public Guid PublicationId { get; set; }
+        public Publication Publication { get; private set; }
     }
 }

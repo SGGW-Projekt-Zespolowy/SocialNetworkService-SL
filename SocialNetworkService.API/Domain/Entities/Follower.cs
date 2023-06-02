@@ -4,13 +4,20 @@ namespace Domain.Entities
 {
     public sealed class Follower : Entity
     {
-        public Follower(Guid id, Guid followerId, Guid followerUserId) : base(id)
+        public Follower(Guid id, Guid followerId, Guid followedUserId) : base(id)
         {
             FollowerId = followerId;
-            FollowerUserId = followerUserId;
-        }
-
+            FollowedUserId = followedUserId;
+        }        
+        /// <summary>
+        /// the person that is following
+        /// </summary>
         public Guid FollowerId { get; set; }
-        public Guid FollowerUserId { get; set; }
+        public User FollowerUser { get; set; }
+        /// <summary>
+        /// the person that is followed
+        /// </summary>
+        public Guid FollowedUserId { get; set; }
+        public User FollowedUser { get; set; }
     }
 }

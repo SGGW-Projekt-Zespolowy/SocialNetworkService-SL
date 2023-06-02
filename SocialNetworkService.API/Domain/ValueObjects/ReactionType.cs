@@ -10,9 +10,10 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
+        private ReactionType() { }
 
         public string Value { get; }
-
+        public static implicit operator string(ReactionType type) => type.Value ?? string.Empty;
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;

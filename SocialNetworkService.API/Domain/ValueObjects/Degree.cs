@@ -10,14 +10,14 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
-
+        private Degree() { }
         public string Value { get; }
-
+        public static implicit operator string(Degree degree) => degree.Value ?? string.Empty;
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;
         }
-        public Result<Degree> Create(string degree)
+        public static Result<Degree> Create(string degree)
         {
             if (string.IsNullOrEmpty(degree))
                 return Result.Failure<Degree>(new Error(

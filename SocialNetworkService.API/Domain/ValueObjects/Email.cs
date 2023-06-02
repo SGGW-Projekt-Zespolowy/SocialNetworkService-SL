@@ -11,14 +11,15 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
-
+        private Email() { }
         public string Value { get; }
+        public static implicit operator string(Email email) => email.Value ?? string.Empty;
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;
         }
 
-        public Result<Email> Create(string email)
+        public static Result<Email> Create(string email)
         {
             if (string.IsNullOrEmpty(email))
                 return Result.Failure<Email>(new Error(
@@ -38,7 +39,7 @@ namespace Domain.ValueObjects
             return new Email(email);
         }
 
-        private bool ValidateEmail(string email)
+        private static bool ValidateEmail(string email)
         {
             var validation = new Regex("\\S+@\\w+[.]\\w+");
             return validation.Match(email).Success;

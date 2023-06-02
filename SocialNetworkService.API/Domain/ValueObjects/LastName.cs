@@ -10,13 +10,14 @@ namespace Domain.ValueObjects
         {
             Value = value;
         }
-
+        private LastName() { }
         public string Value { get; }
+        public static implicit operator string(LastName lastName) => lastName.Value ?? string.Empty;
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Value;
         }
-        public Result<LastName> Create(string lastName)
+        public static Result<LastName> Create(string lastName)
         {
             if (string.IsNullOrEmpty(lastName))
                 return Result.Failure<LastName>(new Error(

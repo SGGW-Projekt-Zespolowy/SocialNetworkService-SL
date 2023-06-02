@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Entities
+﻿namespace Domain.Entities
 {
     public enum DegreeEnum
     {
+        Default,
         Student, // student medycyny - np. student Jan Kowalski
         Lek, // lekarz medycyny - np. lek. Jan Kowalski
         LekDent, // lekarz dentysta - np. lek. dent. Jan Kowalski
