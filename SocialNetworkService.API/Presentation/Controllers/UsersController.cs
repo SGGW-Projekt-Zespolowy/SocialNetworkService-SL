@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
+    [ApiController]
     [Route("api/users")]
     public sealed class UsersController: ApiController
     {
@@ -12,9 +13,9 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUser(CreateUserCommand command)
+        public async Task<IActionResult> AddUser([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
         {
-            var result = await Sender.Send(command);
+            var result = await Sender.Send(command,cancellationToken);
 
             return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
         }

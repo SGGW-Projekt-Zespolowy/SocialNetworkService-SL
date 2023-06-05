@@ -30,7 +30,7 @@ namespace Application.Users.Commands.CreateUser
                 request.dateOfBirth, degree.Value, request.profilePicture);
 
             _userRepository.Add(user);
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }
