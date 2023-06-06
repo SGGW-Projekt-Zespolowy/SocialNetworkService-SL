@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Scan(selector => selector.FromAssemblies(
         Infrastructure.AssemblyReference.Assembly).AddClasses(false).AsImplementedInterfaces().WithScopedLifetime());
 
-//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddControllers().AddApplicationPart(Presentation.AssemblyReference.Assembly);
 

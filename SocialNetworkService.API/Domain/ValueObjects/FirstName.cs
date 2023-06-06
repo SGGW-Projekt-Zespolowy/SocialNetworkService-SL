@@ -25,7 +25,7 @@ namespace Domain.ValueObjects
                     "FirstName.TooLong",
                     "First name is too long."));
 
-            return new FirstName(firstName);
+            return new Result<FirstName>(new FirstName(firstName), true, Error.None);
         }
         public override IEnumerable<object> GetAtomicValues()
         {
