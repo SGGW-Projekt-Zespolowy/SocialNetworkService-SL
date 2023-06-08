@@ -22,15 +22,15 @@ namespace Domain.Entities
             ProfilePicture = profilePicture;
         }
         private User() { }
-        public Email Email { get; set; }
-        public DateTime LastLoginDate { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public FirstName FirstName { get; set; }
-        public LastName LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public Degree Degree { get; set; }
-        public bool IsVerified { get; set; }
-        public string ProfilePicture { get; set; }
+        public Email Email { get; private set; }
+        public DateTime LastLoginDate { get; private set; }
+        public DateTime RegistrationDate { get; private set; }
+        public FirstName FirstName { get; private set; }
+        public LastName LastName { get; private set; }
+        public DateTime DateOfBirth { get; private set; }
+        public Degree Degree { get; private set; }
+        public bool IsVerified { get; private set; }
+        public string ProfilePicture { get; private set; }
         public DateTime CreationDate { get; init; }
         public List<Specialization> Specializations { get; } = new List<Specialization>();
         public List<Contact> Contacts { get; } = new List<Contact>();
@@ -40,5 +40,13 @@ namespace Domain.Entities
         public List<Badge> Badges { get; } = new List<Badge>();
         public List<Follower> FollowedByMeUsers { get; } = new List<Follower>();
        
+        public void Update(Email? email, FirstName? firstName, LastName? lastName, Degree? degree, string profilePicture)
+        {
+            if (email is not null) Email = email;
+            if (firstName is not null) FirstName = firstName;
+            if (lastName is not null) LastName = lastName;
+            if (degree is not null) Degree = degree;
+            if (profilePicture != string.Empty) ProfilePicture = profilePicture;
+        }
     }
 }

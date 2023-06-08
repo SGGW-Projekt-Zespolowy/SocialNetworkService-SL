@@ -20,17 +20,17 @@ namespace Application.Users.Commands.CreateUser
 
         public async Task<Result> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var emailResult = Email.Create(request.email);
+            var id = new Guid();
             var firstName = FirstName.Create(request.firstName);
             var lastName = LastName.Create(request.lastName);
-            var degree = Degree.Create(request.degree);
-            var id = new Guid();
+            var emailResult = Email.Create(request.email);     
+            var degree = Degree.Create(request.degree);            
 
             var user = new User(id,emailResult.Value, firstName.Value, lastName.Value,
                 request.dateOfBirth, degree.Value, request.profilePicture);
 
-            _userRepository.Add(user);
-            await _unitOfWork.SaveChangesAsync();
+            _userRepository.Add(user,cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

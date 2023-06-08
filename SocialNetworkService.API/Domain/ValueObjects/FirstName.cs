@@ -16,16 +16,12 @@ namespace Domain.ValueObjects
         public static Result<FirstName> Create(string firstName)
         {
             if (string.IsNullOrEmpty(firstName))            
-                return Result.Failure<FirstName>(new Error(
-                    "FirstName.Empty",
-                    "First name is empty."));            
+                return Result.Failure<FirstName>(Errors.DomainErrors.ValueObjects.FirstNameNotFound);            
 
             if (firstName.Length > MaxLenght)
-                return Result.Failure<FirstName>(new Error(
-                    "FirstName.TooLong",
-                    "First name is too long."));
+                return Result.Failure<FirstName>(Errors.DomainErrors.ValueObjects.FirstNameTooLong);
 
-            return new FirstName(firstName);
+            return new Result<FirstName>(new FirstName(firstName), true, Error.None);
         }
         public override IEnumerable<object> GetAtomicValues()
         {

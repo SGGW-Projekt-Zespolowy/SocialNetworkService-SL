@@ -1,12 +1,19 @@
 using Application;
 using Infrastructure;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Presentation;
+using System.Reflection;
 //using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.Scan(selector => selector.FromAssemblies(
+        Infrastructure.AssemblyReference.Assembly).AddClasses(false).AsImplementedInterfaces().WithScopedLifetime());
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+
+builder.Services.AddControllers().AddApplicationPart(Presentation.AssemblyReference.Assembly);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

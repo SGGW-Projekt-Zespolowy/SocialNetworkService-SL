@@ -3,6 +3,6 @@ namespace Application.Abstractions
 {
     public interface IUnitOfWork
     {
-        Task SaveChangesAsync();
+        Task SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
