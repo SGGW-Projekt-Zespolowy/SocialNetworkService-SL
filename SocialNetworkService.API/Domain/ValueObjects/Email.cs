@@ -32,9 +32,7 @@ namespace Domain.ValueObjects
                     "Email is too long."));
 
             if (!ValidateEmail(email))
-                return Result.Failure<Email>(new Error("" +
-                    "Email.Invalid",
-                    "Email is invalid."));
+                return Result.Failure<Email>(Errors.DomainErrors.ValueObjects.EmailIsInvalid);
 
             return new Email(email);
         }

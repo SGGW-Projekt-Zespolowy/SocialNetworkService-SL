@@ -29,7 +29,7 @@ namespace Application.Users.Commands.CreateUser
             var user = new User(id,emailResult.Value, firstName.Value, lastName.Value,
                 request.dateOfBirth, degree.Value, request.profilePicture);
 
-            _userRepository.Add(user);
+            _userRepository.Add(user,cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
