@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Domain.Shared;
+using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Domain.ValueObjects
 {
@@ -22,14 +23,10 @@ namespace Domain.ValueObjects
         public Result<Content> Create(string content)
         {
             if (string.IsNullOrEmpty(content))
-                return Result.Failure<Content>(new Error(
-                        "Content.Empty",
-                        "Content is empty."));
+                return Result.Failure<Content>(ValueObjectErrors.ContentNotFound);
 
             if (content.Length > MaxContentLength)
-                return Result.Failure<Content>(new Error(
-                    "Content.TooLong",
-                    "Content is too long."));
+                return Result.Failure<Content>(ValueObjectErrors.ContentTooLong);
 
             return new Content(content);
         }
