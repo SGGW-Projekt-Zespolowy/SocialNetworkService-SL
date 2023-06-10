@@ -88,12 +88,12 @@ namespace Presentation.Controllers
             return result.IsSuccess ? Ok() : NotFound(result.Error);
         }
                 
-        [HttpPut("login")]
+        [HttpPost("login")]
         [ProducesResponseType(typeof(string),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LoginUser([FromBody] LoginRequest request, CancellationToken cancellationToken)
         {
-            var command = new LoginCommand(request.email);
+            var command = new LoginCommand(request.email,request.password);
             var result = await Sender.Send(command, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest();

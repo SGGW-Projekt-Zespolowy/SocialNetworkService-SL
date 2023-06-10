@@ -32,6 +32,7 @@ namespace Domain.Entities
         public bool IsVerified { get; private set; }
         public string ProfilePicture { get; private set; }
         public DateTime CreationDate { get; init; }
+        public Credentials Credentials { get; }
         public List<Specialization> Specializations { get; } = new List<Specialization>();
         public List<Contact> Contacts { get; } = new List<Contact>();
         public List<Follower> Followers { get; } = new List<Follower>();

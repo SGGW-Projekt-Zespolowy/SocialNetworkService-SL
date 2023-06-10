@@ -6,7 +6,7 @@ namespace SocialNetworkService.API.OptionsSetup
     public class JwtOptionsSetup : IConfigureOptions<JwtOptions>
     {
         private const string SectionName = "Jwt"; 
-        public readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         public JwtOptionsSetup(IConfiguration configuration)
         {

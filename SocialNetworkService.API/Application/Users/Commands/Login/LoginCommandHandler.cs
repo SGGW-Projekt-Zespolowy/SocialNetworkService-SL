@@ -6,10 +6,10 @@ using Domain.ValueObjects;
 
 namespace Application.Users.Commands.Login
 {
-    public sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
+    internal sealed class LoginCommandHandler : ICommandHandler<LoginCommand, string>
     {
-        IUserRepository _userRepository;
-        IJwtProvider _jwtProvider;
+        private readonly IUserRepository _userRepository;
+        private readonly IJwtProvider _jwtProvider;
 
         public LoginCommandHandler(IUserRepository userRepository, IJwtProvider jwtProvider)
         {

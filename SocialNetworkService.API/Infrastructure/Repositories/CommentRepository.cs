@@ -22,7 +22,6 @@ namespace Infrastructure.Repositories
         public async Task<Comment?> GetByIdWithAllAsync(Guid id)
         {
             return await _dbContext.Set<Comment>()
-                .Include(x => x.Reactions)
                 .Include(x => x.Comments)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }

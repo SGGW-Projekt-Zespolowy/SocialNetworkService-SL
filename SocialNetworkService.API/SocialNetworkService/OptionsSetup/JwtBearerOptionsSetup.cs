@@ -8,7 +8,7 @@ namespace SocialNetworkService.API.OptionsSetup
 {
     public class JwtBearerOptionsSetup: IConfigureOptions<JwtBearerOptions>
     {
-        public readonly JwtOptions _jwtOptions;
+        private readonly JwtOptions _jwtOptions;
 
         public JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions)
         {
