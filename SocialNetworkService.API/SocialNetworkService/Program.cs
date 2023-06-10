@@ -1,8 +1,10 @@
 using Application;
 using Infrastructure;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Presentation;
+using SocialNetworkService.API.OptionsSetup;
 using System.Reflection;
 //using Serilog;
 
@@ -17,6 +19,12 @@ builder.Services.AddControllers().AddApplicationPart(Presentation.AssemblyRefere
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 
 builder.Services.AddDbContext<DatabaseContext>(
     x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -63,6 +71,7 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.UseEndpoints(endpoints =>
 {
