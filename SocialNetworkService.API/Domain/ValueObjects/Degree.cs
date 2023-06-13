@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Domain.Shared;
+using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Domain.ValueObjects
 {
@@ -20,14 +21,10 @@ namespace Domain.ValueObjects
         public static Result<Degree> Create(string degree)
         {
             if (string.IsNullOrEmpty(degree))
-                return Result.Failure<Degree>(new Error(
-                    "Degree.Empty",
-                    "Degree of user is empty."));
+                return Result.Failure<Degree>(ValueObjectErrors.DegreeNotFound);
 
             if (!Enum.IsDefined(typeof(DegreeEnum), degree))
-                return Result.Failure<Degree>(new Error(
-                    "Degree.NotDefined",
-                    "Degree of user is not defined."));
+                return Result.Failure<Degree>(ValueObjectErrors.DegreeNotDefined);
 
             return new Degree(degree);
         }

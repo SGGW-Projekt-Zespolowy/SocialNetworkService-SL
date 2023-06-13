@@ -35,7 +35,7 @@ namespace Application.Users.Commands.UpdateUser
             if (email is not null && email.IsFailure) return Result.Failure(ValueObjectErrors.EmailIsInvalid);
             if (firstName is not null && firstName.IsFailure) return Result.Failure(ValueObjectErrors.FirstNameIsInvalid);
             if (lastName is not null && lastName.IsFailure) return Result.Failure(ValueObjectErrors.LastNameIsInvalid);
-            if (degree is not null && degree.IsFailure) return Result.Failure(ValueObjectErrors.DegreeIsInvalid);
+            if (degree is not null && degree.IsFailure) return Result.Failure(ValueObjectErrors.DegreeNotDefined);
 
             user.Update(email?.Value, firstName?.Value, lastName?.Value, degree?.Value, profilePicture);
             _userRepository.Update(user, cancellationToken);
