@@ -20,7 +20,7 @@ namespace Application.Users.Queries.GetUserByFullName
         {
             if(request.fullName == string.Empty)
             {
-                return Result.Failure<GetUserByFullNameResponse>(Domain.Errors.ApplicationErrors.User.EmptyRequest);
+                return Result.Failure<GetUserByFullNameResponse>(Domain.Errors.ApplicationErrors.Request.EmptyRequest);
             }
 
             var user = await _userRepository.GetByFullNameAsync(request.fullName, cancellationToken);
