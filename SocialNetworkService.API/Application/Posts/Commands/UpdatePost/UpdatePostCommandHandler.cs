@@ -29,9 +29,9 @@ namespace Application.Posts.Commands.UpdatePost
             var type = request.type != string.Empty ? MedicalSpecialization.Create(request.type) : null;
             var title = request.title != string.Empty ? Title.Create(request.title) : null;
 
-            if (content is not null && content.IsFailure) return Result.Failure(ValueObjectErrors.EmailIsInvalid);
-            if (type is not null && type.IsFailure) return Result.Failure(ValueObjectErrors.FirstNameIsInvalid);
-            if (title is not null && title.IsFailure) return Result.Failure(ValueObjectErrors.LastNameIsInvalid);
+            if (content is not null && content.IsFailure) return Result.Failure(ValueObjectErrors.ContentIsInvalid);
+            if (type is not null && type.IsFailure) return Result.Failure(ValueObjectErrors.TypeIsInvalid);
+            if (title is not null && title.IsFailure) return Result.Failure(ValueObjectErrors.TitleIsInvalid);
 
             post.Update(content?.Value, type?.Value, title?.Value);
             _postRepository.Update(post, cancellationToken);
