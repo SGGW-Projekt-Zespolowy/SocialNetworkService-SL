@@ -19,5 +19,10 @@ namespace Domain.Errors
         {
             public static Error PostNotFound(Guid postId) => new Error("Post.NotFound", $"Post with id {postId} was not found.");
         }
+
+        public static class Publication
+        {
+            public static Error PublicationNotFound(Guid publicationId) => new Error("Publication.NotFound", $"Publication with id {publicationId} was not found.");
+        }
     }
 }
