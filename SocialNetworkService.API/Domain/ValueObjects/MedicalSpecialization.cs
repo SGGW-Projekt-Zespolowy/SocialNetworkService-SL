@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Domain.Shared;
+using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 
 namespace Domain.ValueObjects
@@ -25,19 +26,10 @@ namespace Domain.ValueObjects
         public static Result<MedicalSpecialization> Create(string medicalSpecialization)
         {
             if (string.IsNullOrEmpty(medicalSpecialization))
-                return Result.Failure<MedicalSpecialization>(new Error(
-                    "MedicalSpecialization.Empty",
-                    "MedicalSpecialization is empty."));
-
-            if (medicalSpecialization.Length > MaxTypeLength)
-                return Result.Failure<MedicalSpecialization>(new Error(
-                    "MedicalSpecialization.TooLongName",
-                    "MedicalSpecialization is too long."));
+                return Result.Failure<MedicalSpecialization>(ValueObjectErrors.MedicalSpecializationNotFound);
 
             if (!Enum.IsDefined(typeof(MedicalSpecializationEnum), medicalSpecialization))
-                return Result.Failure<MedicalSpecialization>(new Error(
-                    "MedicalSpecialization.NotDefined",
-                    "MedicalSpecialization is not defined."));
+                return Result.Failure<MedicalSpecialization>(ValueObjectErrors.MedicalSpecializationNotDefined);
 
             return new MedicalSpecialization(medicalSpecialization);
         }

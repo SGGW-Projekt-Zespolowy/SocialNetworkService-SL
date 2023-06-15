@@ -1,5 +1,6 @@
 ﻿using Domain.Primitives;
 using Domain.Shared;
+using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Domain.ValueObjects
 {
@@ -20,14 +21,10 @@ namespace Domain.ValueObjects
         public static Result<LastName> Create(string lastName)
         {
             if (string.IsNullOrEmpty(lastName))
-                return Result.Failure<LastName>(new Error(
-                        "LastName.Empty",
-                        "First name is empty"));
+                return Result.Failure<LastName>(ValueObjectErrors.LastNameNotFound);
 
             if (lastName.Length > MaxNameLength)
-                return Result.Failure<LastName>(new Error(
-                    "LastName.TooLongName",
-                    "Last name is too long."));
+                return Result.Failure<LastName>(ValueObjectErrors.LastNameTooLong);
 
             return new LastName(lastName);
         }

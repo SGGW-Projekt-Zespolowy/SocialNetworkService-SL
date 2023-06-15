@@ -1,6 +1,7 @@
 ﻿using Domain.Primitives;
 using Domain.Shared;
 using System.Text.RegularExpressions;
+using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Domain.ValueObjects
 {
@@ -25,19 +26,13 @@ namespace Domain.ValueObjects
         public static Result<Link> Create(string link)
         {
             if (string.IsNullOrEmpty(link))
-                return Result.Failure<Link>(new Error(
-                    "Link.Empty",
-                    "Link is null or empty."));
+                return Result.Failure<Link>(ValueObjectErrors.LinkNotFound);
 
             if (link.Length > MaxLinkLength)
-                return Result.Failure<Link>(new Error(
-                    "Link.TooLong",
-                    "Link is too long."));
+                return Result.Failure<Link>(ValueObjectErrors.LinkTooLong);
 
             if (!linkRegex.IsMatch(link))
-                return Result.Failure<Link>(new Error(
-                    "Link.Incorrect",
-                    "Link is incorrect."));
+                return Result.Failure<Link>(ValueObjectErrors.LinkIsInvalid);
 
             return new Link(link);
         }
