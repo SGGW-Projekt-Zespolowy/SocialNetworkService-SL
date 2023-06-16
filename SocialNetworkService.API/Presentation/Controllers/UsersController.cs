@@ -20,8 +20,7 @@ namespace Presentation.Controllers
         public UsersController(ISender sender): base(sender)
         {
         }
-
-        
+                
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -78,7 +77,7 @@ namespace Presentation.Controllers
             return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
         }
 
-        
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
