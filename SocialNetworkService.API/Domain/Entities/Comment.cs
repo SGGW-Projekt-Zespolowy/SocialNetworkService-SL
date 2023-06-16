@@ -23,6 +23,5 @@ namespace Domain.Entities
         public Guid ParentCommentId { get; set; }
         public List<Comment> Comments { get; set; }
         public bool RelatedToComment { get; set; }
-        public List<Reaction> Reactions { get; } = new List<Reaction>();
     }
 }

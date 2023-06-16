@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230531180328_Initial")]
+    [Migration("20230616003632_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -144,19 +144,25 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PasswordSalt")
+                    b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Credentials", (string)null);
                 });
@@ -289,9 +295,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ReactionType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -300,8 +303,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Reactions", (string)null);
                 });
@@ -439,6 +440,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Credentials", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithOne("Credentials")
+                        .HasForeignKey("Domain.Entities.Credentials", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.Follower", b =>
                 {
                     b.HasOne("Domain.Entities.User", "FollowedUser")
@@ -480,13 +490,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Reaction", b =>
-                {
-                    b.HasOne("Domain.Entities.Post", null)
-                        .WithMany("Reactions")
-                        .HasForeignKey("PostId");
-                });
-
             modelBuilder.Entity("Domain.Entities.Specialization", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -506,8 +509,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("Reactions");
                 });
 
             modelBuilder.Entity("Domain.Entities.Publication", b =>
@@ -522,6 +523,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Badges");
 
                     b.Navigation("Contacts");
+
+                    b.Navigation("Credentials")
+                        .IsRequired();
 
                     b.Navigation("FollowedByMeUsers");
 

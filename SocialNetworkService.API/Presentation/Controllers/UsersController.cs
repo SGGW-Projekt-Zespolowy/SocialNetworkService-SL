@@ -1,9 +1,13 @@
-﻿using Application.Users.Commands.CreateUser;
+﻿using Application.Credentials.CreateCredentials;
+using Application.Credentials.Login;
+using Application.Users.Commands.CreateUser;
 using Application.Users.Commands.DeleteUser;
+using Application.Users.Commands.RegisterUser;
 using Application.Users.Commands.UpdateUser;
 using Application.Users.Queries.GetUserByFullName;
 using Application.Users.Queries.GetUserById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,17 +20,28 @@ namespace Presentation.Controllers
         public UsersController(ISender sender): base(sender)
         {
         }
-
+                
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddUser([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken cancellationToken)
         {
-            var result = await Sender.Send(command,cancellationToken);
+            var userCommand = new CreateUserCommand(request.email, request.firstName, request.lastName,
+                request.dateOfBirth, request.degree);
+            var userResult = await Sender.Send(userCommand,cancellationToken);
+            if (userResult.IsFailure)
+                return BadRequest(userResult.Error);
 
-            return result.IsSuccess ? Created(string.Empty,result) : BadRequest(result.Error);
+            var credentialsCommand = new CreateCredentialsCommand(userResult.Value.Id, request.password);
+            var credentialsResult = await Sender.Send(credentialsCommand,cancellationToken);
+            
+            if (userResult.IsSuccess && credentialsResult.IsSuccess)
+                return Ok(userResult.Value);
+            else
+                return BadRequest(credentialsResult.Error);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(GetUserByIdResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -38,8 +53,9 @@ namespace Presentation.Controllers
             return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
         }
 
+        [Authorize]
         [HttpGet("")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserByFullNameResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUserByFullName([FromQuery] string fullName, CancellationToken cancellationToken)
         {
@@ -48,9 +64,10 @@ namespace Presentation.Controllers
 
             return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
         }
-        
+
+        [Authorize]
         [HttpGet("details/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetUserByIdWithAllResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetWholeUserInformation([FromRoute] Guid id, CancellationToken cancellationToken)
         {
@@ -59,7 +76,8 @@ namespace Presentation.Controllers
 
             return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
         }
-        
+
+        [Authorize]
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -70,7 +88,8 @@ namespace Presentation.Controllers
 
             return response.IsSuccess ? Ok() : NotFound(response.Error);
         }
-        
+
+        [Authorize]
         [HttpPut("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -79,7 +98,16 @@ namespace Presentation.Controllers
             var result = await Sender.Send(command,cancellationToken);
             return result.IsSuccess ? Ok() : NotFound(result.Error);
         }
+                
+        [HttpPost("login")]
+        [ProducesResponseType(typeof(string),StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> LoginUser([FromBody] LoginRequest request, CancellationToken cancellationToken)
+        {
+            var command = new LoginCommand(request.email,request.password);
+            var result = await Sender.Send(command, cancellationToken);
 
-        // Add Mapper
+            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+        }        
     }
 }

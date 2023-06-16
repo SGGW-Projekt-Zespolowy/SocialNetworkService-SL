@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -10,6 +11,11 @@ namespace Infrastructure.Repositories
         public CredentialsRepository(DatabaseContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<Credentials?> GetByUserIdAsync(Guid userId)
+        {
+            return await _dbContext.Set<Credentials>().FirstOrDefaultAsync(x => x.UserId == userId);
         }
 
         public void Add(Credentials credentials)

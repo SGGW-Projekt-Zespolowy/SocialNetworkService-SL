@@ -10,7 +10,7 @@ namespace Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Credentials> builder)
         {
             builder.ToTable("Credentials");
-            builder.HasKey(k => k.Id);
+            builder.HasKey(k => k.Id);            
         }
     }
 }
