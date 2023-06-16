@@ -1,5 +1,6 @@
 ﻿using Domain.Primitives;
 using Domain.Shared;
+using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Domain.ValueObjects
 {
@@ -21,14 +22,10 @@ namespace Domain.ValueObjects
         public static Result<Title> Create(string title)
         {
             if (string.IsNullOrEmpty(title))
-                return Result.Failure<Title>(new Error(
-                        "Title.Empty",
-                        "Title is empty."));
+                return Result.Failure<Title>(ValueObjectErrors.TitleNotFound);
 
             if (title.Length > MaxTitleLength)
-                return Result.Failure<Title>(new Error(
-                    "Title.TooLong",
-                    "Title is too long."));
+                return Result.Failure<Title>(ValueObjectErrors.TitleTooLong);
 
             return new Title(title);
         }

@@ -1,6 +1,7 @@
 ﻿using Domain.Primitives;
 using Domain.Shared;
 using System.Text.RegularExpressions;
+using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Domain.ValueObjects
 {
@@ -22,17 +23,13 @@ namespace Domain.ValueObjects
         public static Result<Email> Create(string email)
         {
             if (string.IsNullOrEmpty(email))
-                return Result.Failure<Email>(new Error(
-                    "Email.Empty",
-                    "Email is empty"));
+                return Result.Failure<Email>(ValueObjectErrors.EmailNotFound);
 
             if (email.Length > MaxEmailLenght)
-                return Result.Failure<Email>(new Error(
-                    "Email.TooLong",
-                    "Email is too long."));
+                return Result.Failure<Email>(ValueObjectErrors.EmailTooLong);
 
             if (!ValidateEmail(email))
-                return Result.Failure<Email>(Errors.DomainErrors.ValueObjects.EmailIsInvalid);
+                return Result.Failure<Email>(ValueObjectErrors.EmailIsInvalid);
 
             return new Email(email);
         }
