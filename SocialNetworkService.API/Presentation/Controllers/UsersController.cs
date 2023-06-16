@@ -1,6 +1,8 @@
-﻿using Application.Users.Commands.CreateUser;
+﻿using Application.Credentials.CreateCredentials;
+using Application.Credentials.Login;
+using Application.Users.Commands.CreateUser;
 using Application.Users.Commands.DeleteUser;
-using Application.Users.Commands.Login;
+using Application.Users.Commands.RegisterUser;
 using Application.Users.Commands.UpdateUser;
 using Application.Users.Queries.GetUserByFullName;
 using Application.Users.Queries.GetUserById;
@@ -19,15 +21,25 @@ namespace Presentation.Controllers
         {
         }
 
-        [Authorize]
+        
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddUser([FromBody] CreateUserCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken cancellationToken)
         {
-            var result = await Sender.Send(command,cancellationToken);
+            var userCommand = new CreateUserCommand(request.email, request.firstName, request.lastName,
+                request.dateOfBirth, request.degree);
+            var userResult = await Sender.Send(userCommand,cancellationToken);
+            if (userResult.IsFailure)
+                return BadRequest(userResult.Error);
 
-            return result.IsSuccess ? Created(string.Empty,result) : BadRequest(result.Error);
+            var credentialsCommand = new CreateCredentialsCommand(userResult.Value.Id, request.password);
+            var credentialsResult = await Sender.Send(credentialsCommand,cancellationToken);
+            
+            if (userResult.IsSuccess && credentialsResult.IsSuccess)
+                return Ok(userResult.Value);
+            else
+                return BadRequest(credentialsResult.Error);
         }
 
         [Authorize]
@@ -66,7 +78,7 @@ namespace Presentation.Controllers
             return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
         }
 
-        [Authorize]
+        
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
