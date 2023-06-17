@@ -12,9 +12,7 @@ namespace Presentation.Controllers
     [Route("api/posts")]
     public sealed class PostsController : ApiController
     {
-        public PostsController(ISender sender) : base(sender)
-        {
-        }
+        public PostsController(ISender sender) : base(sender) { }
 
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
