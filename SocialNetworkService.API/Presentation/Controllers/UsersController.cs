@@ -21,8 +21,9 @@ namespace Presentation.Controllers
         public UsersController(ISender sender): base(sender)
         {
         }
-                
-        [HttpPost("")]
+
+        [Authorize]
+        [HttpPost("user")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterUserRequest request, CancellationToken cancellationToken)
@@ -43,7 +44,7 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpGet("{id}")]
+        [HttpGet("user/{id}")]
         [ProducesResponseType(typeof(GetUserByIdResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUserById([FromRoute] Guid id, CancellationToken cancellationToken)
@@ -55,7 +56,7 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpGet("")]
+        [HttpGet("user")]
         [ProducesResponseType(typeof(GetUserByFullNameResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUserByFullName([FromQuery] string fullName, CancellationToken cancellationToken)
@@ -67,7 +68,7 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpGet("details/{id}")]
+        [HttpGet("user/details/{id}")]
         [ProducesResponseType(typeof(GetUserByIdWithAllResponse),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetWholeUserInformation([FromRoute] Guid id, CancellationToken cancellationToken)
@@ -79,7 +80,7 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpDelete("user/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteUserById([FromRoute] Guid id, CancellationToken cancellationToken)
@@ -91,7 +92,7 @@ namespace Presentation.Controllers
         }
 
         [Authorize]
-        [HttpPut("")]
+        [HttpPut("user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command, CancellationToken cancellationToken)
@@ -100,7 +101,7 @@ namespace Presentation.Controllers
             return result.IsSuccess ? Ok() : NotFound(result.Error);
         }
                 
-        [HttpPost("login")]
+        [HttpPost("user/login")]
         [ProducesResponseType(typeof(string),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> LoginUser([FromBody] LoginRequest request, CancellationToken cancellationToken)
@@ -111,7 +112,7 @@ namespace Presentation.Controllers
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
         }
 
-        [HttpGet()]
+        [HttpGet("user/email")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CheckIfUserExistByEmail([FromQuery] string email,CancellationToken cancellationToken)
