@@ -14,7 +14,8 @@ namespace Domain.Errors
             public static readonly Error EmptyRequest = new Error("Request.Empty", "Your request is empty");
 
             public static readonly Error InvalidLoginCredentials = new Error("Credentials.Invalid", "Login Credentials are invalid");
-                      
+
+            public static readonly Error BadEmailRequest = new Error("UserEmail.Invalid","Bad Email Request");
         }
     }
 }

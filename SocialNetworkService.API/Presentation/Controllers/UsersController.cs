@@ -4,6 +4,7 @@ using Application.Users.Commands.CreateUser;
 using Application.Users.Commands.DeleteUser;
 using Application.Users.Commands.RegisterUser;
 using Application.Users.Commands.UpdateUser;
+using Application.Users.Queries.GetUserByEmail;
 using Application.Users.Queries.GetUserByFullName;
 using Application.Users.Queries.GetUserById;
 using MediatR;
@@ -108,6 +109,18 @@ namespace Presentation.Controllers
             var result = await Sender.Send(command, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest();
-        }        
+        }
+
+        [HttpGet()]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CheckIfUserExistByEmail([FromQuery] string email,CancellationToken cancellationToken)
+        {
+            var query = new GetUserByEmailQuery(email);
+            var result = await Sender.Send(query, cancellationToken);
+
+            if (result.IsSuccess) return Ok(result.Value);
+            else return BadRequest(result.Error);
+        }
     }
 }
