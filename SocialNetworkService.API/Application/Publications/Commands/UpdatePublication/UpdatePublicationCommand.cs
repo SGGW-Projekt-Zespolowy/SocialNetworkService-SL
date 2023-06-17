@@ -3,7 +3,7 @@ using Domain.ValueObjects;
 
 namespace Application.Publications.Commands.UpdatePublication
 {
-    public sealed record UpdatePublicationCommand(
+    public record class UpdatePublicationCommand(
         Guid id, Title title, string content, Link link, 
         string picture, MedicalSpecialization type) : ICommand;
 }
