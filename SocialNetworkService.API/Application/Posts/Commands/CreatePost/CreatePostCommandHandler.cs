@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions;
 using Application.Abstractions.Messaging;
-using Application.Users.Commands.CreateUser;
 using Domain.Entities;
 using Domain.Repositories;
 using Domain.Shared;
