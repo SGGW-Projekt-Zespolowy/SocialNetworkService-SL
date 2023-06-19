@@ -1,10 +1,13 @@
 using Application;
 using Infrastructure;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Presentation;
+using SocialNetworkService.API.OptionsSetup;
 using System.Reflection;
-//using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +17,6 @@ builder.Services.Scan(selector => selector.FromAssemblies(
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 
 builder.Services.AddControllers().AddApplicationPart(Presentation.AssemblyReference.Assembly);
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DatabaseContext>(
     x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -28,8 +28,25 @@ builder.Services
     .AddInfrastructure()
     .AddPresentation();
 
-//builder.Host.UseSerilog((context, configuration) =>
-//    configuration.ReadFrom.Configuration(context.Configuration));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(o => o.TokenValidationParameters = new()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]))
+    });
+
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+//builder.Services.ConfigureOptions<JwtBearerOptionsSetup>(); - nie dzia³a
+
 
 builder.Services.AddCors(options =>
 {
@@ -42,19 +59,12 @@ builder.Services.AddCors(options =>
     });
 });
 
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-//    .RequireAuthenticatedUser()
-//    .Build();
-//});
 
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-//app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 app.UseCors();
@@ -62,13 +72,8 @@ app.UseRouting();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
+app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapFallbackToController("Index", "Fallback");
-});
 
 app.MapControllers();
 

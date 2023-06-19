@@ -1,9 +1,11 @@
 ﻿using Domain.Entities;
+using Domain.ValueObjects;
 
 namespace Domain.Repositories
 {
     public interface IUserRepository: IRepository<User>
     {
+        Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken);
         Task<User?> GetByFullNameAsync(string fullName, CancellationToken cancellationToken);
         Task<User?> GetByIdWithAllAsync(Guid id, CancellationToken cancellationToken);
         Task<User?> GetByIdAsync(Guid id, CancellationToken cancellationToken);

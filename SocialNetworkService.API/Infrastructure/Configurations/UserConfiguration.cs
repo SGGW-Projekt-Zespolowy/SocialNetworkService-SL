@@ -15,7 +15,8 @@ namespace Infrastructure.Configurations
             builder.Property(x => x.Email).HasConversion(user => user.Value, value => Email.Create(value).Value);
             builder.Property(x => x.FirstName).HasConversion(user => user.Value, value => FirstName.Create(value).Value);
             builder.Property(x => x.LastName).HasConversion(user => user.Value, value => LastName.Create(value).Value);
-            builder.Property(x => x.Degree).HasConversion(user => user.Value, value => Degree.Create(value).Value);            
+            builder.Property(x => x.Degree).HasConversion(user => user.Value, value => Degree.Create(value).Value);
+            builder.HasOne(x => x.Credentials).WithOne().HasForeignKey<Credentials>(z => z.UserId);
         }
     }
 }
