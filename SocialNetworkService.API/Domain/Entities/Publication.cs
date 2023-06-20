@@ -37,6 +37,7 @@ namespace Domain.Entities
             if (link is not null) Link = link;
             if (picture != string.Empty) Picture = picture;
             if (type is not null) Type = type;
+            ModificationDate = DateTime.Now;
         }
     }
 }
