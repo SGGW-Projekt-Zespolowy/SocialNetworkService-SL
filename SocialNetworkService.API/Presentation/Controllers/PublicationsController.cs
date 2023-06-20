@@ -14,9 +14,9 @@ namespace Presentation.Controllers
 {
     [ApiController]
     [Route("api/publications")]
-    public sealed class PublicationsControllers : ApiController
+    public sealed class PublicationsController : ApiController
     {
-        public PublicationsControllers(ISender sender) : base(sender) { }
+        public PublicationsController(ISender sender) : base(sender) { }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(GetPostByIdResponse), StatusCodes.Status200OK)]

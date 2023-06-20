@@ -10,9 +10,9 @@ namespace Presentation.Controllers
 {
     [ApiController]
     [Route("api/comments")]
-    public class CommentControllers : ApiController
+    public class CommentController : ApiController
     {
-        public CommentControllers(ISender sender) : base(sender) { }
+        public CommentController(ISender sender) : base(sender) { }
 
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
