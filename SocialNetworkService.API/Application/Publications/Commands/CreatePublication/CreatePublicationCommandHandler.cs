@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Entities;
 using Domain.Repositories;
 using Domain.Shared;
@@ -6,7 +7,7 @@ using Domain.ValueObjects;
 
 namespace Application.Publications.Commands.CreatePublication
 {
-    public sealed class CreatePublicationCommandHandler
+    public sealed class CreatePublicationCommandHandler : ICommandHandler<CreatePublicationCommand>
     {
         private readonly IPublicationRepository _publicationRepository;
         private readonly IUnitOfWork _unitOfWork;

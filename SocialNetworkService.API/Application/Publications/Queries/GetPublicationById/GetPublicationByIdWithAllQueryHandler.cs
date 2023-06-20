@@ -1,10 +1,11 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 
 namespace Application.Publications.Queries.GetPublicationById
 {
-    public class GetPublicationByIdWithAllQueryHandler
+    public class GetPublicationByIdWithAllQueryHandler : IQueryHandler<GetPublicationByIdWithAllQuery, GetPublicationByIdWithAllResponse>
     {
         private readonly IPublicationRepository _publicationRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -15,7 +16,7 @@ namespace Application.Publications.Queries.GetPublicationById
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<GetPublicationByIdWithAllResponse>> Handle(GetPublicationByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Result<GetPublicationByIdWithAllResponse>> Handle(GetPublicationByIdWithAllQuery request, CancellationToken cancellationToken)
         {
             var publication = await _publicationRepository.GetByIdWithAllAsync(request.publicationId, cancellationToken);
 

@@ -15,6 +15,7 @@ namespace Domain.Entities
             Picture = picture;
             Type = type;
             CreationDate = DateTime.Now;
+            ModificationDate = DateTime.Now;
         }
         private Publication() { }
         public Guid AuthorId { get; set; }

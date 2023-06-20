@@ -1,10 +1,11 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 
 namespace Application.Publications.Commands.DeletePublication
 {
-    public class DeletePublicationByIdCommandHandler
+    public class DeletePublicationByIdCommandHandler : ICommandHandler<DeletePublicationByIdCommand>
     {
         private readonly IPublicationRepository _publicationRepository;
         private readonly IUnitOfWork _unitOfWork;

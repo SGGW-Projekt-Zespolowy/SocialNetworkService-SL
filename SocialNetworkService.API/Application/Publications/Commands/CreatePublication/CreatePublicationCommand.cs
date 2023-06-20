@@ -4,6 +4,6 @@ using Domain.ValueObjects;
 namespace Application.Publications.Commands.CreatePublication
 {
     public sealed record CreatePublicationCommand(
-        Guid authorId, Title title, string content,
-        Link link, string picture, MedicalSpecialization type) : ICommand;
+        Guid authorId, string title, string content,
+        string link, string picture, string type) : ICommand;
 }

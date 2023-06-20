@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 using Domain.ValueObjects;
@@ -6,7 +7,7 @@ using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Application.Publications.Commands.UpdatePublication
 {
-    public class UpdatePublicationCommandHandler
+    public class UpdatePublicationCommandHandler : ICommandHandler<UpdatePublicationCommand>
     {
         private readonly IPublicationRepository _publicationRepository;
         private readonly IUnitOfWork _unitOfWork;

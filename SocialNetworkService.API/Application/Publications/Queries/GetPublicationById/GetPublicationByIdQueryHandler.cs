@@ -1,10 +1,11 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 
 namespace Application.Publications.Queries.GetPublicationById
 {
-    public class GetPublicationByIdQueryHandler
+    public class GetPublicationByIdQueryHandler : IQueryHandler<GetPublicationByIdQuery, GetPublicationByIdResponse>
     {
         private readonly IPublicationRepository _publicationRepository;
         private readonly IUnitOfWork _unitOfWork;

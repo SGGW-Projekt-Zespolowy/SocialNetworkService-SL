@@ -4,6 +4,6 @@ using Domain.ValueObjects;
 namespace Application.Publications.Commands.UpdatePublication
 {
     public record class UpdatePublicationCommand(
-        Guid id, Title title, string content, Link link, 
-        string picture, MedicalSpecialization type) : ICommand;
+        Guid id, string title, string content, string link, 
+        string picture, string type) : ICommand;
 }
