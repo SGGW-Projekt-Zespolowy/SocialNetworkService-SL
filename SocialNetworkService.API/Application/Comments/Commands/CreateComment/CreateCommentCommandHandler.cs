@@ -1,4 +1,6 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
+using Application.Posts.Commands.CreatePost;
 using Domain.Entities;
 using Domain.Repositories;
 using Domain.Shared;
@@ -6,7 +8,7 @@ using Domain.ValueObjects;
 
 namespace Application.Comments.Commands.CreateComment
 {
-    public class CreateCommentCommandHandler
+    public class CreateCommentCommandHandler : ICommandHandler<CreateCommentCommand>
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;

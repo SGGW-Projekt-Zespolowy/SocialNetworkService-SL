@@ -1,10 +1,11 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 
 namespace Application.Comments.Commands.DeleteComment
 {
-    public class DeleteCommentByIdCommandHandler
+    public class DeleteCommentByIdCommandHandler : ICommandHandler<DeleteCommentByIdCommand>
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;

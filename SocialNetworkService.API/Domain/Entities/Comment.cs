@@ -10,6 +10,7 @@ namespace Domain.Entities
             AuthorId = authorId;
             Content = content;
             CreationDate = DateTime.Now;
+            ModificationDate = DateTime.Now;
             ParentPostId = parentPostId;
             ParentCommentId = parentCommentId;
             RelatedToComment = relatedToComment;

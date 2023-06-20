@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 using Domain.ValueObjects;
@@ -6,7 +7,7 @@ using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Application.Comments.Commands.UpdateComment
 {
-    public class UpdateCommentCommandHandler
+    public class UpdateCommentCommandHandler : ICommandHandler<UpdateCommentCommand>
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;

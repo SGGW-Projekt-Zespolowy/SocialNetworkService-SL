@@ -1,10 +1,11 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 
 namespace Application.Comments.Queries.GetCommentById
 {
-    public class GetCommentByIdWithAllQueryHandler
+    public class GetCommentByIdWithAllQueryHandler : IQueryHandler<GetCommentByIdWithAllQuery, GetCommentByIdWithAllResponse>
     {
         private readonly ICommentRepository _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
