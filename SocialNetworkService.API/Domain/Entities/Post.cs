@@ -9,6 +9,7 @@ namespace Domain.Entities
         {
             AuthorId = authorId;
             CreationDate = DateTime.Now;
+            ModificationDate = DateTime.Now;
             Content = content;
             Type = type;
             Title = title;
@@ -19,8 +20,8 @@ namespace Domain.Entities
         public User Author { get; set; }
         public DateTime CreationDate { get; init; } = DateTime.Now;
         public string Content { get; set; } = string.Empty;
-        public MedicalSpecialization Type { get; set; } = MedicalSpecialization.Create("Default").Value;
-        public Title Title { get; set; } = Title.Create(string.Empty).Value;
+        public MedicalSpecialization Type { get; set; }
+        public Title Title { get; set; }
         public DateTime ModificationDate { get; set; }
         public List<Comment> Comments { get; } = new List<Comment>();
 

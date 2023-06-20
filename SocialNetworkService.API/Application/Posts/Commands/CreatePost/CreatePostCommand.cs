@@ -4,6 +4,6 @@ using Domain.ValueObjects;
 namespace Application.Posts.Commands.CreatePost
 {
     public sealed record CreatePostCommand(
-        Guid authorId, string content, MedicalSpecialization type, Title title
+        Guid authorId, string content, string type, string title
         ) : ICommand;
 }

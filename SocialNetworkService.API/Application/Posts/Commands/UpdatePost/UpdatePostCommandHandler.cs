@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions;
+using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 using Domain.ValueObjects;
@@ -6,7 +7,7 @@ using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Application.Posts.Commands.UpdatePost
 {
-    public class UpdatePostCommandHandler
+    public class UpdatePostCommandHandler : ICommandHandler<UpdatePostCommand>
     {
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
