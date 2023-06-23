@@ -3,11 +3,13 @@ using Application.Comments.Commands.DeleteComment;
 using Application.Comments.Commands.UpdateComment;
 using Application.Comments.Queries.GetCommentById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/comments")]
     public class CommentController : ApiController

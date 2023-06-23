@@ -7,11 +7,13 @@ using Application.Publications.Commands.DeletePublication;
 using Application.Publications.Commands.UpdatePublication;
 using Application.Publications.Queries.GetPublicationById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/publications")]
     public sealed class PublicationsController : ApiController

@@ -21,8 +21,7 @@ namespace Presentation.Controllers
         public UsersController(ISender sender): base(sender)
         {
         }
-
-        [Authorize]
+        
         [HttpPost("user")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
