@@ -34,5 +34,10 @@ namespace Infrastructure.Repositories
         {
             _dbContext.Set<Post>().Update(post);
         }
+
+        public async Task<bool> Exists(Guid id)
+        {
+            return await _dbContext.Set<Post>().AnyAsync(x => x.Id == id);
+        }
     }
 }
