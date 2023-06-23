@@ -24,6 +24,8 @@ namespace Application.Comments.Commands.CreateComment
             var id = new Guid();
             var authorId = request.authorId;
             var content = Content.Create(request.content);
+            if (content.IsFailure)
+                return Result.Failure(content.Error);
             var parentPostId = request.parentPostId;
             var parentCommentId = request.parentCommentId;
             var relatedToComment = request.relatedToComment;

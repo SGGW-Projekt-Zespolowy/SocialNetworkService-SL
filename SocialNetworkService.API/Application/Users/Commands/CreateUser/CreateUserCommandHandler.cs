@@ -22,9 +22,17 @@ namespace Application.Users.Commands.CreateUser
         {
             var id = new Guid();
             var firstName = FirstName.Create(request.firstName);
+            if (firstName.IsFailure)
+                return Result.Failure<User>(firstName.Error);
             var lastName = LastName.Create(request.lastName);
-            var emailResult = Email.Create(request.email);     
-            var degree = Degree.Create(request.degree);            
+            if (lastName.IsFailure)
+                return Result.Failure<User>(lastName.Error);
+            var emailResult = Email.Create(request.email);
+            if (emailResult.IsFailure)
+                return Result.Failure<User>(emailResult.Error);
+            var degree = Degree.Create(request.degree);      
+            if (degree.IsFailure)
+                return Result.Failure<User>(degree.Error);
 
             var user = new User(id,emailResult.Value, firstName.Value, lastName.Value,
                 request.dateOfBirth, degree.Value, string.Empty);

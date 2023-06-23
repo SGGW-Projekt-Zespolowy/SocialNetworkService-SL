@@ -23,10 +23,18 @@ namespace Application.Publications.Commands.CreatePublication
             var id = new Guid();
             var authorId = request.authorId;
             var title = Title.Create(request.title);
+            if (title.IsFailure)
+                return Result.Failure(title.Error);
             var content = Content.Create(request.content);
+            if (content.IsFailure)
+                return Result.Failure(content.Error);
             var link = Link.Create(request.link);
+            if (link.IsFailure)
+                return Result.Failure(link.Error);
             var picture = request.picture;
             var type = MedicalSpecialization.Create(request.type);
+            if (type.IsFailure)
+                return Result.Failure(type.Error);
 
             var publication = new Publication(id, authorId, title.Value, content.Value, link.Value, picture, type.Value);
 
