@@ -6,11 +6,11 @@
 
         public GetImagesByPostIdQueryResponse(List<ImageResponse> images)
         {
-            this.images = images;
+            this.Images = images;
         }
         public void Add(ImageResponse image)
         {
-            images.Add(image);
+            Images.Add(image);
         }
     }
 }
