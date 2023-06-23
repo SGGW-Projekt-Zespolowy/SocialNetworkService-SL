@@ -36,7 +36,7 @@ namespace Application.Images.Commands.AddPicture
                         var base64 = Convert.ToBase64String(fileBytes);
 
                         var image = new Image(Guid.NewGuid(), base64, request.postId);
-                        _imageRepository.Add(image);
+                        _imageRepository.Add(image, cancellationToken);
                     }
                 }
             }

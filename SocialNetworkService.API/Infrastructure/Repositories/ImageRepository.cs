@@ -13,19 +13,19 @@ namespace Infrastructure.Repositories
             _dbContext = databaseContext;
         }
 
-        public void Add(Image image)
+        public void Add(Image image, CancellationToken cancellationToken)
         {
             _dbContext.Set<Image>().Add(image);
         }
 
-        public async Task Delete(Guid imageId)
+        public async Task Delete(Guid imageId, CancellationToken cancellationToken)
         {
             var image = await _dbContext.Set<Image>().FirstOrDefaultAsync(x => imageId == x.Id);
             if (image is not null)
                 _dbContext.Remove(image);
         }
 
-        public async Task<List<Image>> GetAllByPostIdAsync(Guid postId)
+        public async Task<List<Image>> GetAllByPostIdAsync(Guid postId, CancellationToken cancellationToken)
         {
             var images = await _dbContext.Set<Image>().Where(x => x.PostId == postId).ToListAsync();
             return images;

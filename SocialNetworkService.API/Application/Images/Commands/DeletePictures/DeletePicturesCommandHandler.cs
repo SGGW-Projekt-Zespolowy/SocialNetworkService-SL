@@ -20,7 +20,7 @@ namespace Application.Images.Commands.DeletePictures
         {
             foreach(var pictureId in request.imageIds)
             {
-                await _imageRepository.Delete(pictureId);
+                await _imageRepository.Delete(pictureId, cancellationToken);
             }
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

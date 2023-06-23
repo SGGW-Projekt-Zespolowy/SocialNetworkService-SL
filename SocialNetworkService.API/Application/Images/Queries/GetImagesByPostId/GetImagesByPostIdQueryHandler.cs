@@ -19,7 +19,7 @@ namespace Application.Images.Queries.GetImagesByPostId
 
         public async Task<Result<GetImagesByPostIdQueryResponse>> Handle(GetImagesByPostIdQuery query, CancellationToken cancellationToken)
         {
-            var images = await _imageRepository.GetAllByPostIdAsync(query.postId);
+            var images = await _imageRepository.GetAllByPostIdAsync(query.postId, cancellationToken);
             if (images is null)
                 return Result.Failure<GetImagesByPostIdQueryResponse>
                     (Domain.Errors.ApplicationErrors.Image.ImagesNotFound(query.postId));

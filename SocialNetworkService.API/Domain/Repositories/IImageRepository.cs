@@ -4,9 +4,9 @@ namespace Domain.Repositories
 {
     public interface IImageRepository
     {
-        public void Add(Image image);
-        public Task Delete(Guid imageId);
-        public Task<List<Image>> GetAllByPostIdAsync(Guid postId);
+        public void Add(Image image, CancellationToken cancellationToken);
+        public Task Delete(Guid imageId, CancellationToken cancellationToken);
+        public Task<List<Image>> GetAllByPostIdAsync(Guid postId, CancellationToken cancellationToken);
 
     }
 }
