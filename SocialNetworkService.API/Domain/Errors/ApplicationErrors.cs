@@ -34,10 +34,6 @@ namespace Domain.Errors
         {
             public static Error CommentNotFound(Guid commentId) => new Error("Comment.NotFound", $"Comment with id {commentId} was not found.");
         }
-        public static class Post
-        {
-            public static Error PostNotFound(Guid id) => new Error("Post.NotFound", $"Post with id={id} was not found");
-        }
         public static class Image
         {
             public static Error ImagesNotFound(Guid id) => new Error("Images.NotFound", $"No Images have been found for post with id={id}.");
