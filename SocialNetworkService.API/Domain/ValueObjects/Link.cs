@@ -8,7 +8,7 @@ namespace Domain.ValueObjects
     public class Link : ValueObject
     {
         public const int MaxLinkLength = 60;
-        static Regex linkRegex = new Regex(@"^(http|https)://[a-z0-9\-\.]+\.[a-z]{2,}/?.*$");
+        static Regex linkRegex = new Regex(@"^http(s)?://([\w-]+.)+[\w-]+(/[\w- ./?%&=])?$");
 
 
         private Link(string value)

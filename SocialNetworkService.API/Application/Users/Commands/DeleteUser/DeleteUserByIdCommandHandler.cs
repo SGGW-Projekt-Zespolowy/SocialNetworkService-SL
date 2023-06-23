@@ -19,7 +19,7 @@ namespace Application.Users.Commands.DeleteUser
 
         public async Task<Result> Handle(DeleteUserByIdCommand request, CancellationToken cancellationToken)
         {
-            if (request.userId == Guid.Empty) return Result.Failure(Domain.Errors.ApplicationErrors.User.EmptyRequest);
+            if (request.userId == Guid.Empty) return Result.Failure(Domain.Errors.ApplicationErrors.Request.EmptyRequest);
 
             var user = await _userRepository.GetByIdAsync(request.userId, cancellationToken);
 
