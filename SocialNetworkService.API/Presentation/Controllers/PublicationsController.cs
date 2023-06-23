@@ -19,7 +19,7 @@ namespace Presentation.Controllers
         public PublicationsController(ISender sender) : base(sender) { }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(GetPostByIdResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetPublicationByIdResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPublicationById([FromRoute] Guid id, CancellationToken cancellationToken)
         {
