@@ -15,7 +15,7 @@ namespace Domain.Errors
             public static readonly Error InvalidLoginCredentials = new Error("Credentials.Invalid", "Login Credentials are invalid");
             public static Error UserEmailNotFound(string email) => new Error("User.NotFound", $"User with email: {email} was not found.");
             public static Error UserNameNotFound(string fullName) => new Error("User.NotFound", $"User with name: {fullName} was not found.");
-            public static readonly Error InvalidLoginCredentials = new Error("Credentials.Invalid", "Login Credentials are invalid");
+            
             public static readonly Error BadEmailRequest = new Error("UserEmail.Invalid", "Bad Email Request");
         }
 
