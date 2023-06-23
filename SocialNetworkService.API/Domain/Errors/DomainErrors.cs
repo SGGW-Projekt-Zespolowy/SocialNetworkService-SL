@@ -23,6 +23,7 @@ namespace Domain.Errors
             public static readonly Error DegreeNotDefined = new Error("Degree.NotDefined", "Degree is not defined");
             public static readonly Error DegreeNotFound = new Error("Degree.NotFound", "Degree is empty.");
             public static readonly Error ContentNotFound = new Error("Content.NotFound", "Content is empty.");
+            public static readonly Error ContentIsInvalid = new Error("Content.Invalid", "Content is invalid.");
             public static readonly Error ContentTooLong = new Error("Content.TooLong", "Content is too long.");
             public static readonly Error LinkIsInvalid = new Error("Link.Invalid", "Link is invalid.");
             public static readonly Error LinkNotFound = new Error("Link.NotFound", "Link is empty.");
@@ -32,7 +33,9 @@ namespace Domain.Errors
             public static readonly Error ReactionNotDefined = new Error("Reaction.NotDefined", "Reaction is not defined");
             public static readonly Error ReactionNotFound = new Error("Reaction.NotFound", "Reaction is empty.");
             public static readonly Error TitleNotFound = new Error("Title.NotFound", "Title is empty.");
+            public static readonly Error TitleIsInvalid = new Error("Title.Invalid", "Title is invalid.");
             public static readonly Error TitleTooLong = new Error("Title.TooLong", "Title is too long.");
+            public static readonly Error TypeIsInvalid = new Error("Type.Invalid", "Type is invalid.");
         }
     }
 }
