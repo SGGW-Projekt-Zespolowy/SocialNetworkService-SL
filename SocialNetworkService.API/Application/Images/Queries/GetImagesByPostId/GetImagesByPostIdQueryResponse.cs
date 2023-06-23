@@ -2,7 +2,7 @@
 {
     public sealed class GetImagesByPostIdQueryResponse
     {
-        public List<ImageResponse> images { get; private set; }
+        public List<ImageResponse> Images { get; private set; }
 
         public GetImagesByPostIdQueryResponse(List<ImageResponse> images)
         {
