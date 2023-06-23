@@ -3,11 +3,13 @@ using Application.Posts.Commands.DeletePost;
 using Application.Posts.Commands.UpdatePost;
 using Application.Posts.Queries.GetPostById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/posts")]
     public sealed class PostsController : ApiController

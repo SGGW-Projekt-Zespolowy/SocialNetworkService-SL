@@ -2,11 +2,13 @@
 using Application.Images.Commands.DeletePictures;
 using Application.Images.Queries.GetImagesByPostId;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/images")]
     public sealed class ImagesController: ApiController
