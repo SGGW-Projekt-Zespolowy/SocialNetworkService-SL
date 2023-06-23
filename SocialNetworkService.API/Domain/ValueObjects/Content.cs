@@ -20,7 +20,7 @@ namespace Domain.ValueObjects
             yield return Value;
         }
 
-        public Result<Content> Create(string content)
+        public static Result<Content> Create(string content)
         {
             if (string.IsNullOrEmpty(content))
                 return Result.Failure<Content>(ValueObjectErrors.ContentNotFound);

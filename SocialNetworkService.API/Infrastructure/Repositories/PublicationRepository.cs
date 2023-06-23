@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
@@ -13,25 +14,28 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(Publication publication)
+        public void Add(Publication publication, CancellationToken cancellationToken)
         {
             _dbContext.Set<Publication>().Add(publication);
         }
 
-        public async Task<Publication?> GetByIdWithAllAsync(Guid id)
+        public async Task<Publication?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+            => await ApplySpecification(new PublicationByIdSpecification(id)).FirstOrDefaultAsync(cancellationToken);
+
+        public async Task<Publication?> GetByIdWithAllAsync(Guid id, CancellationToken cancellationToken)
+            => await ApplySpecification(new PublicationByIdIncludeAllSpecification(id)).FirstOrDefaultAsync(cancellationToken);
+
+        public IQueryable<Publication> ApplySpecification(Specification<Publication> specification)
         {
-            return await _dbContext.Set<Publication>()
-                .Include(x => x.CoAuthors)
-                .Include(x => x.Comments)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            return SpecificationEvaluator.GetQuery(_dbContext.Set<Publication>(), specification);
         }
 
-        public void Remove(Publication publication)
+        public void Remove(Publication publication, CancellationToken cancellationToken)
         {
             _dbContext.Set<Publication>().Remove(publication);
         }
 
-        public void Update(Publication publication)
+        public void Update(Publication publication, CancellationToken cancellationToken)
         {
             _dbContext.Set<Publication>().Update(publication);
         }
