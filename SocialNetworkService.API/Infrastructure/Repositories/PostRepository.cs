@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    internal class PostRepository : IPostRepository
+    public class PostRepository : IPostRepository
     {
         private readonly DatabaseContext _dbContext;
 

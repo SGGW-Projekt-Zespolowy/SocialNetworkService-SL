@@ -9,8 +9,6 @@ namespace Domain.Repositories
         void Add(Post post, CancellationToken cancellationToken);
         void Remove(Post post, CancellationToken cancellationToken);
         void Update(Post post, CancellationToken cancellationToken);
-        Task<Post?> GetByIdWithAllAsync(Guid id);
         Task<bool> Exists(Guid id);
-        void Add(Post post);
     }
 }
