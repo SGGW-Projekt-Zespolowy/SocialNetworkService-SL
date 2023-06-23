@@ -8,12 +8,10 @@ namespace Application.Users.Queries.GetUserByFullName
     public class GetUserByFullNameQueryHandler: IQueryHandler<GetUserByFullNameQuery,GetUserByFullNameResponse>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
         public GetUserByFullNameQueryHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<GetUserByFullNameResponse>> Handle(GetUserByFullNameQuery request, CancellationToken cancellationToken)
@@ -24,7 +22,7 @@ namespace Application.Users.Queries.GetUserByFullName
             }
 
             var user = await _userRepository.GetByFullNameAsync(request.fullName, cancellationToken);
-            if (user == null)
+            if (user is null)
             {
                 return Result.Failure<GetUserByFullNameResponse>(Domain.Errors.ApplicationErrors.User.UserNameNotFound(request.fullName));
             }
