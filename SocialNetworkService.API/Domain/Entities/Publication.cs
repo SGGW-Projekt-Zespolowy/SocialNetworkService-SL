@@ -28,7 +28,6 @@ namespace Domain.Entities
         public DateTime CreationDate { get; init; }
         public DateTime ModificationDate { get; set; }
         public List<CoAuthor> CoAuthors { get; } = new List<CoAuthor>();
-        public List<Comment> Comments { get; } = new List<Comment>();
 
         public void Update(Title? title, Content? content, Link? link, string picture, MedicalSpecialization? type)
         {

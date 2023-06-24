@@ -8,7 +8,6 @@ namespace Infrastructure.Specifications
             : base(x => x.Id == id) 
         {
             AddInclude(publication => publication.CoAuthors);
-            AddInclude(publication => publication.Comments);
         }
     }
 }

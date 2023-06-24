@@ -20,13 +20,15 @@ namespace Application.Publications.Queries.GetPublicationById
         {
             var publication = await _publicationRepository.GetByIdAsync(request.publicationId, cancellationToken);
 
-            if (publication == null)
+            if (publication is null)
             {
                 return Result.Failure<GetPublicationByIdResponse>(Domain.Errors.ApplicationErrors.Publication.PublicationNotFound(request.publicationId));
             }
 
             var response = new GetPublicationByIdResponse(
-                publication.Id, publication.AuthorId, publication.Title, publication.Content, publication.Link, publication.Picture, publication.Type);
+                publication.Id, publication.AuthorId, publication.Title, 
+                publication.Content, publication.Link, publication.Picture, 
+                publication.Type, publication.CreationDate, publication.ModificationDate);
             return Result.Success(response);
         }
     }

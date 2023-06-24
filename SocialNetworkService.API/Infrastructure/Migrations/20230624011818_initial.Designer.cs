@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230623200447_Images")]
-    partial class Images
+    [Migration("20230624011818_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,9 +77,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CommentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -96,22 +93,15 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("ParentPostId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PublicationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("RelatedToComment")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Usefull")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("PublicationId");
+                    b.HasIndex("ParentPostId");
 
                     b.ToTable("Comments", (string)null);
                 });
@@ -428,17 +418,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("Domain.Entities.Comment", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("CommentId");
-
                     b.HasOne("Domain.Entities.Post", null)
                         .WithMany("Comments")
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("PublicationId");
+                        .HasForeignKey("ParentPostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Contact", b =>
@@ -502,7 +486,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.User", "Author")
                         .WithMany("Posts")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -530,11 +514,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Comment", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
@@ -543,8 +522,6 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Publication", b =>
                 {
                     b.Navigation("CoAuthors");
-
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

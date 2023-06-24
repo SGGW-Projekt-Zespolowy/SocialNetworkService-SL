@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -163,7 +163,8 @@ namespace Infrastructure.Migrations
                         name: "FK_Posts_Users_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +210,49 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModificationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ParentPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParentCommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RelatedToComment = table.Column<bool>(type: "bit", nullable: false),
+                    Usefull = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_Posts_ParentPostId",
+                        column: x => x.ParentPostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CoAuthors",
                 columns: table => new
                 {
@@ -232,42 +276,6 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModificationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ParentPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ParentCommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RelatedToComment = table.Column<bool>(type: "bit", nullable: false),
-                    CommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PublicationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Comments_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Comments_Publications_PublicationId",
-                        column: x => x.PublicationId,
-                        principalTable: "Publications",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Badges_AuthorId_Name",
                 table: "Badges",
@@ -286,19 +294,9 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_CommentId",
+                name: "IX_Comments_ParentPostId",
                 table: "Comments",
-                column: "CommentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_PostId",
-                table: "Comments",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_PublicationId",
-                table: "Comments",
-                column: "PublicationId");
+                column: "ParentPostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contacts_ContactId",
@@ -333,6 +331,11 @@ namespace Infrastructure.Migrations
                 table: "Hashtags",
                 columns: new[] { "Name", "RelatedItemId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Images_PostId",
+                table: "Images",
+                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_AuthorId",
@@ -381,16 +384,19 @@ namespace Infrastructure.Migrations
                 name: "Hashtags");
 
             migrationBuilder.DropTable(
+                name: "Images");
+
+            migrationBuilder.DropTable(
                 name: "Reactions");
 
             migrationBuilder.DropTable(
                 name: "Specializations");
 
             migrationBuilder.DropTable(
-                name: "Posts");
+                name: "Publications");
 
             migrationBuilder.DropTable(
-                name: "Publications");
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "Users");
