@@ -32,7 +32,9 @@ namespace Application.Comments.Commands.UpdateComment
 
             if (content is not null && content.IsFailure) return Result.Failure(ValueObjectErrors.ContentIsInvalid);
 
-            comment.Update(content?.Value);
+            var usefull = request.usefull is null ? null : request.usefull;
+
+            comment.Update(content?.Value, usefull);
             _commentRepository.Update(comment, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

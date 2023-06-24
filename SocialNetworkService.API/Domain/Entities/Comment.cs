@@ -22,14 +22,16 @@ namespace Domain.Entities
         public DateTime ModificationDate { get; set; }
         public Guid ParentPostId { get; set; }
         public Guid ParentCommentId { get; set; }
-        public List<Comment> Comments { get; set; }
         public bool RelatedToComment { get; set; }
-        public List<Reaction> Reactions { get; } = new List<Reaction>();
+        public bool Usefull { get; private set; }
 
-        public void Update(Content? content)
+        public void Update(Content? content, bool? usefull)
         {
             if (content is not null) Content = content;
+            if (usefull is not null) Usefull = usefull.Value;
             ModificationDate = DateTime.Now;
         }
+
+        public void CheckCommentUsefull() => Usefull = !Usefull;
     }
 }

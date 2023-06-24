@@ -2,5 +2,5 @@
 
 namespace Application.Comments.Commands.UpdateComment
 {
-    public record class UpdateCommentCommand(Guid commentId, string content) : ICommand;
+    public record class UpdateCommentCommand(Guid commentId, string content,bool? usefull) : ICommand;
 }

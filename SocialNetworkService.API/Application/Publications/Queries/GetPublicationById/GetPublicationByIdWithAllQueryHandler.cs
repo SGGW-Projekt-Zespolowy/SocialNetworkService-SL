@@ -28,8 +28,7 @@ namespace Application.Publications.Queries.GetPublicationById
             var response = new GetPublicationByIdWithAllResponse(
                 publication.Id, publication.AuthorId, publication.Title,
                 publication.Content, publication.Link, publication.Picture, 
-                publication.Type, publication.CoAuthors, publication.Comments
-                );
+                publication.Type, publication.CoAuthors);
 
             return Result.Success(response);
         }

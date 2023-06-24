@@ -29,8 +29,7 @@ namespace Application.Comments.Queries.GetCommentById
                 comment.Id, comment.AuthorId, comment.Content,
                 comment.CreationDate, comment.ModificationDate,
                 comment.ParentPostId, comment.ParentCommentId,
-                comment.RelatedToComment, comment.Comments,
-                comment.Reactions);
+                comment.RelatedToComment);
 
             return Result.Success(response);
         }
