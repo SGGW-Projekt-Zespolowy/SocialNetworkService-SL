@@ -20,7 +20,7 @@ namespace Application.Publications.Queries.GetPublicationById
         {
             var publication = await _publicationRepository.GetByIdWithAllAsync(request.publicationId, cancellationToken);
 
-            if (publication == null)
+            if (publication is null)
             {
                 return Result.Failure<GetPublicationByIdWithAllResponse>(Domain.Errors.ApplicationErrors.Publication.PublicationNotFound(request.publicationId));
             }
@@ -28,7 +28,7 @@ namespace Application.Publications.Queries.GetPublicationById
             var response = new GetPublicationByIdWithAllResponse(
                 publication.Id, publication.AuthorId, publication.Title,
                 publication.Content, publication.Link, publication.Picture, 
-                publication.Type, publication.CoAuthors);
+                publication.Type, publication.CreationDate, publication.ModificationDate, publication.CoAuthors);
 
             return Result.Success(response);
         }

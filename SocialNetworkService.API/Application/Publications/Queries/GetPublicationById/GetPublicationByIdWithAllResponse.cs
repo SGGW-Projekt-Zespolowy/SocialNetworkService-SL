@@ -5,6 +5,6 @@ namespace Application.Publications.Queries.GetPublicationById
 {
     public record GetPublicationByIdWithAllResponse(
         Guid id, Guid authorId, Title title, string content,
-        Link link, string picture, MedicalSpecialization type,
-        List<CoAuthor> coAuthors);
+        Link link, string picture, MedicalSpecialization type, DateTime creationDate,
+        DateTime modificationDate, List<CoAuthor> coAuthors);
 }
