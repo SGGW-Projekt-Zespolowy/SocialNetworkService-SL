@@ -21,7 +21,7 @@ namespace Application.Comments.Queries.GetCommentById
         {
             var comment = await _commentRepository.GetByIdAsync(request.commentId, cancellationToken);
 
-            if (comment == null) 
+            if (comment is null) 
                 return Result.Failure<GetCommentByIdResponse>(Domain.Errors.ApplicationErrors.Comment.CommentNotFound(request.commentId));
 
             var response = new GetCommentByIdResponse(

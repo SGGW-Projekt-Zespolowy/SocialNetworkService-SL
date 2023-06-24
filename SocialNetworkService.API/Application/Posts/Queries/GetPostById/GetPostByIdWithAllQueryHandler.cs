@@ -20,7 +20,7 @@ namespace Application.Posts.Queries.GetPostById
         public async Task<Result<GetPostByIdWithAllResponse>> Handle(GetPostByIdWithAllQuery request, CancellationToken cancellationToken)
         {
             var post = await _postRepository.GetByIdWithAllAsync(request.postId, cancellationToken);
-            if (post == null)
+            if (post is null)
             {
                 return Result.Failure<GetPostByIdWithAllResponse>(Domain.Errors.ApplicationErrors.Post.PostNotFound(request.postId));
             }
