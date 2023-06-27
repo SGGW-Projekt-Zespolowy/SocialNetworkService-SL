@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions;
 using Application.Abstractions.Messaging;
 using Application.Comments.Queries.GetCommentById;
+using Application.Posts.Queries.GetByScope;
 using Domain.Entities;
 using Domain.Repositories;
 using Domain.Shared;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Application.Posts.Queries.Get
 {
-    public class GetPostsByScopeQueryHandler : IQueryHandler<GetPostsByScopeQuery,List<Post>>
+    public class GetPostsByScopeQueryHandler : IQueryHandler<GetPostsByScopeQuery,GetPostsByScopeQueryResponse>
     {
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -24,16 +25,25 @@ namespace Application.Posts.Queries.Get
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<List<Post>>> Handle(GetPostsByScopeQuery request, CancellationToken cancellationToken)
+        public async Task<Result<GetPostsByScopeQueryResponse>> Handle(GetPostsByScopeQuery request, CancellationToken cancellationToken)
         {
             var posts = await _postRepository.GetAll(request.Page, request.PageSize, cancellationToken);
 
             if (posts.Count == 0)
             {
-                return Result.Failure<List<Post>>(Domain.Errors.ApplicationErrors.Post.NoPostsFound());
+                return Result.Failure<GetPostsByScopeQueryResponse>(Domain.Errors.ApplicationErrors.Post.NoPostsFound());
             }
 
-            return Result.Success(posts);
+            var response = new GetPostsByScopeQueryResponse();
+            
+            foreach (var post in posts)
+            {
+                response.Posts.Add(new PostResponse(
+                    post.Id, post.AuthorId, post.Content,
+                    post.CreationDate, post.Type, post.Title));
+            }
+
+            return Result.Success(response);
         }
     }
 }

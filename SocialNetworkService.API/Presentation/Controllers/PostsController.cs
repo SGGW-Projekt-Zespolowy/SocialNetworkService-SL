@@ -2,6 +2,7 @@
 using Application.Posts.Commands.DeletePost;
 using Application.Posts.Commands.UpdatePost;
 using Application.Posts.Queries.Get;
+using Application.Posts.Queries.GetByScope;
 using Application.Posts.Queries.GetPostById;
 using Domain.Entities;
 using MediatR;
@@ -40,7 +41,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet()]
-        [ProducesResponseType(typeof(List<Post>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetPostsByScopeQueryResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetAllByScope([FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
         {
