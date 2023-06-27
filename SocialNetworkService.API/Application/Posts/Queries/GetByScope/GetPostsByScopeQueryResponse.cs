@@ -19,7 +19,7 @@ namespace Application.Posts.Queries.GetByScope
 
     public class PostResponse
     {
-        public PostResponse(Guid id, Guid authorId, string content, DateTime creationDate, MedicalSpecialization type, Title title)
+        public PostResponse(Guid id, Guid authorId, string content, DateTime creationDate, string type, string title, List<Comment> comments)
         {
             Id = id;
             AuthorId = authorId;
@@ -27,14 +27,15 @@ namespace Application.Posts.Queries.GetByScope
             Content = content;
             Type = type;
             Title = title;
+            Comments = comments;
         }
         public Guid Id { get; set; }
         public Guid AuthorId { get; set; }
         public User Author { get; set; }
         public DateTime CreationDate { get; init; } = DateTime.Now;
         public string Content { get; set; } = string.Empty;
-        public MedicalSpecialization Type { get; set; }
-        public Title Title { get; set; }
+        public string Type { get; set; }
+        public string Title { get; set; }
         public List<Comment> Comments { get; } = new List<Comment>();
     }
 }

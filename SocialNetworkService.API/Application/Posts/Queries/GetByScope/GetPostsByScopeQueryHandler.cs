@@ -40,7 +40,7 @@ namespace Application.Posts.Queries.Get
             {
                 response.Posts.Add(new PostResponse(
                     post.Id, post.AuthorId, post.Content,
-                    post.CreationDate, post.Type, post.Title));
+                    post.CreationDate, post.Type.Value, post.Title.Value, post.Comments));
             }
 
             return Result.Success(response);
