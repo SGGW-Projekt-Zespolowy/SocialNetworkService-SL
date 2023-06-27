@@ -1,5 +1,6 @@
 ﻿using Application.Comments.Commands.CreateComment;
 using Application.Comments.Commands.DeleteComment;
+using Application.Comments.Commands.MarkCommentUsefull;
 using Application.Comments.Commands.UpdateComment;
 using Application.Comments.Queries.GetCommentById;
 using MediatR;
@@ -48,12 +49,12 @@ namespace Presentation.Controllers
             return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{commentId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteCommentById([FromRoute] Guid id, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteCommentById([FromRoute] Guid commentId, CancellationToken cancellationToken)
         {
-            var command = new DeleteCommentByIdCommand(id);
+            var command = new DeleteCommentByIdCommand(commentId);
             var response = await Sender.Send(command, cancellationToken);
 
             return response.IsSuccess ? Ok() : NotFound(response.Error);
@@ -66,6 +67,16 @@ namespace Presentation.Controllers
         {
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok() : NotFound(result.Error);
+        }
+
+        [HttpPut("{commentId}/usefull")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> MarkCommentAsUsefull([FromRoute] Guid commentId, [FromQuery] bool isUsefull, CancellationToken cancellationToken)
+        {
+            var command = new MarkCommentUsefullCommand(commentId, isUsefull);
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok(): NotFound(result.Error);
         }
     }
 }

@@ -30,11 +30,9 @@ namespace Application.Comments.Commands.UpdateComment
 
             var content = request.content != string.Empty ? Content.Create(request.content) : null;
 
-            if (content is not null && content.IsFailure) return Result.Failure(ValueObjectErrors.ContentIsInvalid);
+            if (content is not null && content.IsFailure) return Result.Failure(ValueObjectErrors.ContentIsInvalid);            
 
-            var usefull = request.usefull is null ? null : request.usefull;
-
-            comment.Update(content?.Value, usefull);
+            comment.Update(content?.Value, null);
             _commentRepository.Update(comment, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
