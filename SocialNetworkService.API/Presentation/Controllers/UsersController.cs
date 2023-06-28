@@ -108,7 +108,7 @@ namespace Presentation.Controllers
             var command = new LoginCommand(request.email,request.password);
             var result = await Sender.Send(command, cancellationToken);
 
-            return result.IsSuccess ? Ok(result.Value) : BadRequest();
+            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
         }
 
         [HttpGet("user/email")]

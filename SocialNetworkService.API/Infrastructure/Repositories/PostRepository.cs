@@ -1,7 +1,10 @@
-﻿using Domain.Entities;
+﻿using Application.Posts.Queries.GetPostById;
+using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Specifications;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Infrastructure.Repositories
 {
@@ -39,6 +42,17 @@ namespace Infrastructure.Repositories
             _dbContext.Set<Post>().Update(post);
         }
 
+        public async Task<List<Post>> GetAll(int page, int pageSize, CancellationToken cancellationToken)
+        {
+            IQueryable<Post> postsQuery = _dbContext.Set<Post>();
+            var posts = await postsQuery
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Include(p => p.Comments)
+                .ToListAsync(cancellationToken);
+
+            return posts;
+        }
         public async Task<bool> Exists(Guid id)
         {
             return await _dbContext.Set<Post>().AnyAsync(x => x.Id == id);

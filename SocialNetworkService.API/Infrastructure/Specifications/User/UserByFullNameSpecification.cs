@@ -6,6 +6,8 @@ namespace Infrastructure.Specifications.User
     {
         public UserByFullNameSpecification(string fullName):
             base(user => (user.FirstName+" "+user.LastName) == fullName)
-        {}
+        {
+            AddInclude(x => x.Specializations);
+        }
     }
 }

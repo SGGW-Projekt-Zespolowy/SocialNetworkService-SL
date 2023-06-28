@@ -1,7 +1,10 @@
 ﻿using Application.Posts.Commands.CreatePost;
 using Application.Posts.Commands.DeletePost;
 using Application.Posts.Commands.UpdatePost;
+using Application.Posts.Queries.Get;
+using Application.Posts.Queries.GetByScope;
 using Application.Posts.Queries.GetPostById;
+using Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -37,9 +40,20 @@ namespace Presentation.Controllers
             return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
         }
 
+        [HttpGet()]
+        [ProducesResponseType(typeof(GetPostsByScopeQueryResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllByScope([FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
+        {
+            var query = new GetPostsByScopeQuery(page, pageSize);
+            var response = await Sender.Send(query, cancellationToken);
+
+            return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
+        }
+
         [HttpGet("details/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(GetPostByIdWithAllResponse),StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetWholePostInformation([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var query = new GetPostByIdWithAllQuery(id);
