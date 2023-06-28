@@ -27,7 +27,7 @@ namespace Application.Posts.Queries.GetPostById
             }
 
             var response = new GetPostByIdResponse
-                (post.Id,post.AuthorId,post.CreationDate, post.Content,post.Type,post.Title,post.ModificationDate);
+                (post.Id,post.AuthorId,post.CreationDate, post.Content,post.Type,post.Title,post.ModificationDate, post.CaseResolved);
             return Result.Success(response);
         }
     }

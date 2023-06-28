@@ -8,6 +8,7 @@ namespace Infrastructure.Specifications
             base(x => x.Id == id)
         {
             AddInclude(post => post.Comments);
+            AddInclude(post => post.Images);
         }
     }
 }

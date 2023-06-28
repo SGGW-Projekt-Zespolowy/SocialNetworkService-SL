@@ -27,7 +27,7 @@ namespace Application.Users.Queries.GetUserById
 
             var response = new GetUserByIdResponse(
                 user.Id, user.Email, user.LastLoginDate, user.FirstName, user.LastName,
-                user.DateOfBirth, user.Degree, user.IsVerified, user.ProfilePicture);
+                user.DateOfBirth, user.Degree, user.IsVerified, user.ProfilePicture,user.Specializations);
             return Result.Success(response);
         }
     }

@@ -9,5 +9,6 @@ namespace Application.Posts.Queries.GetPostById
         string content, 
         MedicalSpecialization type, 
         Title title, 
-        DateTime modificationDate);
+        DateTime modificationDate,
+        bool caseResolved);
 }

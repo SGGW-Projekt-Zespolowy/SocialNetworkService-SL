@@ -39,7 +39,7 @@ namespace Presentation.Controllers
 
         [HttpGet("details/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(GetPostByIdWithAllResponse),StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetWholePostInformation([FromRoute] Guid id, CancellationToken cancellationToken)
         {
             var query = new GetPostByIdWithAllQuery(id);
