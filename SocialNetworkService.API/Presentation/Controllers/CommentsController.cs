@@ -13,9 +13,9 @@ namespace Presentation.Controllers
     [Authorize]
     [ApiController]
     [Route("api/comments")]
-    public class CommentController : ApiController
+    public class CommentsController : ApiController
     {
-        public CommentController(ISender sender) : base(sender) { }
+        public CommentsController(ISender sender) : base(sender) { }
 
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]

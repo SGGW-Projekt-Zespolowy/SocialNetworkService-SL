@@ -19,7 +19,7 @@ namespace Domain.ValueObjects
         {
             yield return Value;
         }
-        public Result<ReactionType> Create(string reactionType)
+        public static Result<ReactionType> Create(string reactionType)
         {
             if (string.IsNullOrEmpty(reactionType))
                 return Result.Failure<ReactionType>(ValueObjectErrors.ReactionNotFound);
