@@ -22,6 +22,7 @@ namespace Domain.Errors
         public static class Post
         {
             public static Error PostNotFound(Guid postId) => new Error("Post.NotFound", $"Post with id {postId} was not found.");
+            public static Error NoPostsFound() => new Error("NoPostsFound", "There are no posts");
         }
 
             
