@@ -38,5 +38,11 @@ namespace Domain.Errors
         {
             public static Error ImagesNotFound(Guid id) => new Error("Images.NotFound", $"No Images have been found for post with id={id}.");
         }
+
+        public static class Reaction
+        {
+            public static Error ReactionNotFound(Guid reactionId) => new Error("Reaction.NotFound", $"Reaction with id {reactionId} was not found.");
+            public static readonly Error NoReactionsFound = new Error("NoReactionsFound", "There are no reactions");
+        }
     }
 }
