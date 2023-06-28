@@ -1,5 +1,8 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Infrastructure.Specifications;
+using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace Infrastructure.Repositories
 {
@@ -12,17 +15,36 @@ namespace Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(Contact contact)
+        public void Add(List<Contact> contacts, CancellationToken cancellationToken)
         {
-            _dbContext.Set<Contact>().Add(contact);
+            _dbContext.Set<Contact>().AddRange(contacts);
         }
 
-        public void Remove(Contact contact)
+        public async Task<Contact> GetByIdsAsync(Guid userId, Guid contactId, CancellationToken cancellationToken)
+            => await ApplySpecification(new ContactByIdsSpecification(userId, contactId)).FirstOrDefaultAsync(cancellationToken);
+        public IQueryable<Contact> ApplySpecification(Specification<Contact> specification)
         {
-            _dbContext.Set<Contact>().Remove(contact);
+            return SpecificationEvaluator.GetQuery(_dbContext.Set<Contact>(), specification);
+        }
+        public async Task<List<Contact>> GetAll(Guid userId, int page, int pageSize, CancellationToken cancellationToken)
+        {
+            IQueryable<Contact> contactsQuery = _dbContext.Set<Contact>();
+            var posts = await contactsQuery
+                .Where(c => c.UserId == userId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Include(c => c.ContactUser)
+                .ToListAsync(cancellationToken);
+
+            return posts;
         }
 
-        public void Update(Contact contact)
+        public void Remove(List<Contact> contacts, CancellationToken cancellationToken)
+        {
+            _dbContext.Set<Contact>().RemoveRange(contacts);
+        }
+
+        public void Update(Contact contact, CancellationToken cancellationToken)
         {
             _dbContext.Set<Contact>().Update(contact);
         }

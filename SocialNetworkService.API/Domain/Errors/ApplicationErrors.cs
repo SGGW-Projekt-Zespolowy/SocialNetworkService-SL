@@ -55,5 +55,11 @@ namespace Domain.Errors
             public static Error ReactionNotFound(Guid reactionId) => new Error("Reaction.NotFound", $"Reaction with id {reactionId} was not found.");
             public static readonly Error NoReactionsFound = new Error("NoReactionsFound", "There are no reactions");
         }
+
+        public static class Contact
+        {
+            public static Error ContactNotFound(Guid userId, Guid contactId) => new Error("Contact.NotFound", $"Contact between {userId} and {contactId} was not found");
+            public static Error ContactsNotFound(Guid userId) => new Error("Contacts.NotFound", $"No Contacts have been found for post with id={userId}.");
+        }
     }
 }
