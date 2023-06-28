@@ -29,14 +29,14 @@ namespace Infrastructure.Repositories
         public async Task<List<Contact>> GetAll(Guid userId, int page, int pageSize, CancellationToken cancellationToken)
         {
             IQueryable<Contact> contactsQuery = _dbContext.Set<Contact>();
-            var posts = await contactsQuery
+            var contacts = await contactsQuery
                 .Where(c => c.UserId == userId)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Include(c => c.ContactUser)
                 .ToListAsync(cancellationToken);
 
-            return posts;
+            return contacts;
         }
 
         public void Remove(List<Contact> contacts, CancellationToken cancellationToken)
