@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions;
 using Application.Abstractions.Messaging;
-using Application.Followers.Commands.AddFollower;
 using Domain.Entities;
 using Domain.Repositories;
 using Domain.Shared;
