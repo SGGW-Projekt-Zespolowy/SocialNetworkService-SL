@@ -1,4 +1,6 @@
-﻿namespace Application.Users.Queries.GetUserByFullName
+﻿using Domain.Entities;
+
+namespace Application.Users.Queries.GetUserByFullName
 {
     public record GetUserByFullNameResponse(
         Guid id,
@@ -9,5 +11,6 @@
         DateTime dateOfBirth,
         string Degree,
         bool isVerified,
-        string profilePictore);
+        string profilePictore,
+        List<Specialization> Specializations);
 }

@@ -5,7 +5,7 @@ namespace Domain.Entities
 {
     public sealed class Post : AggregateRoot
     {
-        public Post(Guid id, Guid authorId, string content, MedicalSpecialization type, Title title) : base(id)
+        public Post(Guid id, Guid authorId, string content, MedicalSpecialization type, Title title, bool caseResolved) : base(id)
         {
             AuthorId = authorId;
             CreationDate = DateTime.Now;
@@ -13,6 +13,7 @@ namespace Domain.Entities
             Content = content;
             Type = type;
             Title = title;
+            CaseResolved = caseResolved;
         }
         protected Post() { }
 
@@ -23,13 +24,16 @@ namespace Domain.Entities
         public MedicalSpecialization Type { get; set; }
         public Title Title { get; set; }
         public DateTime ModificationDate { get; set; }
+        public bool CaseResolved { get; set; }
         public List<Comment> Comments { get; } = new List<Comment>();
+        public List<Image> Images { get; } = new List<Image>();
 
-        public void Update(Content? content, MedicalSpecialization? type, Title? title)
+        public void Update(Content? content, MedicalSpecialization? type, Title? title, bool? caseResolved)
         {
             if (content is not null) Content = content;
             if (type is not null) Type = type;
             if (title is not null) Title = title;
+            if (caseResolved is not null) CaseResolved = caseResolved.Value;
             ModificationDate = DateTime.Now;
         }
     }

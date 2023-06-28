@@ -30,7 +30,7 @@ namespace Application.Posts.Commands.CreatePost
             if (title.IsFailure)
                 return Result.Failure(title.Error);
 
-            var post = new Post(id, authorId, content.Value, type.Value, title.Value);
+            var post = new Post(id, authorId, content.Value, type.Value, title.Value,false);
 
             _postRepository.Add(post, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

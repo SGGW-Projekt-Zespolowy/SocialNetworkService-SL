@@ -5,5 +5,5 @@ namespace Application.Posts.Queries.GetPostById
 {
     public record GetPostByIdWithAllResponse(
         Guid id, Guid authorId, string content, MedicalSpecialization type, 
-        Title title, DateTime modificationDate, List<Comment> comments);
+        Title title, DateTime modificationDate, List<Comment> comments, bool caseResolved, List<Image> Images);
 }

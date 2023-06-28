@@ -5,6 +5,16 @@ namespace Domain.Errors
 {
     public static class ApplicationErrors
     {
+        public static class General
+        {
+            public static readonly Error NullRequest = new Error("Request.IsNull", "Your request is null");
+        }
+        public static class PostBookmark
+        {
+            public static readonly Error EmptyUserId = new Error("UserId.IsEmpty", "Your UserId is empty");
+            public static readonly Error EmptyPostId = new Error("PostId.IsEmpty", "Your PostId is empty");
+            public static readonly Error BookmarkNotFound = new Error("Bookmark.NotFound", "Bookmark was not found");
+        }
         public static class Request
         {
             public static readonly Error EmptyRequest = new Error("Request.Empty", "Your request is empty");

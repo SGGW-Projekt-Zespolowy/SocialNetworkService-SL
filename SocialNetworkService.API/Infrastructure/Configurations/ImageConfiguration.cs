@@ -10,7 +10,7 @@ namespace Infrastructure.Configurations
         {
             builder.ToTable("Images");
             builder.HasKey(x => x.Id);
-            builder.HasOne<Post>().WithMany().HasForeignKey(x => x.PostId);
+            builder.HasOne<Post>().WithMany(y => y.Images).HasForeignKey(x => x.PostId);
         }
     }
 }

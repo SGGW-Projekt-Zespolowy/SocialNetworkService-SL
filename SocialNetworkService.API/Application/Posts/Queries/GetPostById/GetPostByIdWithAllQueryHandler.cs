@@ -9,12 +9,10 @@ namespace Application.Posts.Queries.GetPostById
     public class GetPostByIdWithAllQueryHandler : IQueryHandler<GetPostByIdWithAllQuery, GetPostByIdWithAllResponse>
     {
         private readonly IPostRepository _postRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public GetPostByIdWithAllQueryHandler(IPostRepository postRepository, IUnitOfWork unitOfWork)
+        public GetPostByIdWithAllQueryHandler(IPostRepository postRepository)
         {
             _postRepository = postRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<GetPostByIdWithAllResponse>> Handle(GetPostByIdWithAllQuery request, CancellationToken cancellationToken)
@@ -26,7 +24,8 @@ namespace Application.Posts.Queries.GetPostById
             }
 
             var response = new GetPostByIdWithAllResponse(
-                post.Id, post.AuthorId, post.Content, post.Type, post.Title, post.ModificationDate, post.Comments);
+                post.Id, post.AuthorId, post.Content, post.Type, post.Title, post.ModificationDate, post.Comments, 
+                post.CaseResolved, post.Images);
             return Result.Success(response);
         }
     }

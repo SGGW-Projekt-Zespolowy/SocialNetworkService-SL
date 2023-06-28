@@ -34,7 +34,7 @@ namespace Application.Posts.Commands.UpdatePost
             if (type is not null && type.IsFailure) return Result.Failure(ValueObjectErrors.TypeIsInvalid);
             if (title is not null && title.IsFailure) return Result.Failure(ValueObjectErrors.TitleIsInvalid);
 
-            post.Update(content?.Value, type?.Value, title?.Value);
+            post.Update(content?.Value, type?.Value, title?.Value, request.caseResolved);
             _postRepository.Update(post, cancellationToken);
             await _unitOfWork.SaveChangesAsync();
 
