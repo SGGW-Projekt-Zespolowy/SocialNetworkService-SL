@@ -61,5 +61,10 @@ namespace Domain.Errors
             public static Error ContactNotFound(Guid userId, Guid contactId) => new Error("Contact.NotFound", $"Contact between {userId} and {contactId} was not found");
             public static Error ContactsNotFound(Guid userId) => new Error("Contacts.NotFound", $"No Contacts have been found for post with id={userId}.");
         }
+        public static class Follower
+        {
+            public static Error FollowedUserNotFound(Guid followerId, Guid followedUserId) => new Error("Followe.NotFound", $"User {followedUserId} is not followed by {followerId}");
+            public static Error FollowedUsersNotFound(Guid followerId) => new Error("FollowedUsers.NotFound", $"No followed users have been found for user with id={followerId}.");
+        }
     }
 }
