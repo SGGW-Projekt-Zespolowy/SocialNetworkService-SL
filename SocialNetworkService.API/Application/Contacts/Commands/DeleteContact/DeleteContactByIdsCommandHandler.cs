@@ -40,7 +40,7 @@ namespace Application.Contacts.Commands.DeleteContact
 
             _contactRepository.Remove(contacts, cancellationToken);
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }
