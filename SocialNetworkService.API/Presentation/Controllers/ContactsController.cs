@@ -1,9 +1,8 @@
 ﻿using Application.Contacts.Commands.AddContact;
 using Application.Contacts.Commands.DeleteContact;
 using Application.Contacts.Queries.GetAllContactsByUserId;
-using Application.Posts.Commands.DeletePost;
+using Application.Followers.Queries.GetAllFollowersByUserId;
 using Application.Posts.Queries.Get;
-using Application.Posts.Queries.GetByScope;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -42,7 +41,7 @@ namespace Presentation.Controllers
         [HttpGet()]
         [ProducesResponseType(typeof(GetAllContactsByUserIdResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAllByScope([FromQuery] Guid userId, [FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllContactsByUserId([FromQuery] Guid userId, [FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
         {
             var query = new GetAllContactsByUserIdQuery(userId, page, pageSize);
             var response = await Sender.Send(query, cancellationToken);
