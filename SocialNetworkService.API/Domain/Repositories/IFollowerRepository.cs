@@ -4,8 +4,9 @@ namespace Domain.Repositories
 {
     public interface IFollowerRepository
     {
-        void Add(Follower follower);
-        void Remove(Follower follower);
-        void Update(Follower follower);
+        Task<Follower> GetByIdsAsync(Guid followerId, Guid followedUserId, CancellationToken cancellationToken);
+        Task<List<Follower>> GetAll(Guid followerId, int page, int pageSize, CancellationToken cancellationToken);
+        void Add(Follower follower, CancellationToken cancellationToken);
+        void Remove(Follower follower, CancellationToken cancellationToken);
     }
 }
