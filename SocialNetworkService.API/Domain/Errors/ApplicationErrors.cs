@@ -65,6 +65,7 @@ namespace Domain.Errors
         {
             public static Error FollowedUserNotFound(Guid followerId, Guid followedUserId) => new Error("Followe.NotFound", $"User {followedUserId} is not followed by {followerId}");
             public static Error FollowedUsersNotFound(Guid followerId) => new Error("FollowedUsers.NotFound", $"No followed users have been found for user with id={followerId}.");
+            public static Error FollowersOfUserNotFound(Guid followedUserId) => new Error("FollowersOfUser.NotFound", $"No followers have been found for user with id={followedUserId}.");
         }
     }
 }

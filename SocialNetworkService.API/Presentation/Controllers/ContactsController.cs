@@ -1,7 +1,6 @@
 ﻿using Application.Contacts.Commands.AddContact;
 using Application.Contacts.Commands.DeleteContact;
 using Application.Contacts.Queries.GetAllContactsByUserId;
-using Application.Followers.Queries.GetAllFollowersByUserId;
 using Application.Posts.Queries.Get;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

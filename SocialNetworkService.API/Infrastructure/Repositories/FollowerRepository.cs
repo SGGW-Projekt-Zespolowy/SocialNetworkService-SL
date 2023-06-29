@@ -26,14 +26,27 @@ namespace Infrastructure.Repositories
             return SpecificationEvaluator.GetQuery(_dbContext.Set<Follower>(), specification);
         }
 
-        public async Task<List<Follower>> GetAll(Guid followerId, int page, int pageSize, CancellationToken cancellationToken)
+        public async Task<List<Follower>> GetAllFollowedUsers(Guid followerId, int page, int pageSize, CancellationToken cancellationToken)
         {
-            IQueryable<Follower> followersQuery = _dbContext.Set<Follower>();
-            var followers = await followersQuery
+            IQueryable<Follower> followedUsersQuery = _dbContext.Set<Follower>();
+            var followedUsers = await followedUsersQuery
                 .Where(f => f.FollowerId == followerId)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .Include(f => f.FollowedUser)
+                .ToListAsync(cancellationToken);
+
+            return followedUsers;
+        }
+
+        public async Task<List<Follower>> GetAllFollowers(Guid followedUserId, int page, int pageSize, CancellationToken cancellationToken)
+        {
+            IQueryable<Follower> followersQuery = _dbContext.Set<Follower>();
+            var followers = await followersQuery
+                .Where(f => f.FollowedUserId == followedUserId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Include(f => f.FollowerUser)
                 .ToListAsync(cancellationToken);
 
             return followers;
@@ -42,6 +55,6 @@ namespace Infrastructure.Repositories
         public void Remove(Follower follower, CancellationToken cancellationToken)
         {
             _dbContext.Set<Follower>().Remove(follower);
-        }
+        }       
     }
 }

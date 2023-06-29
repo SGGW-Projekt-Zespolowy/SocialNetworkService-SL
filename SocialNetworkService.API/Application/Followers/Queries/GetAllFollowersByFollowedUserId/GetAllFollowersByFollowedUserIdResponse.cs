@@ -1,14 +1,15 @@
-﻿using System;
+﻿using Application.Followers.Queries.GetAllFollowedUsersByFollowerId;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Followers.Queries.GetAllFollowersByUserId
+namespace Application.Followers.Queries.GetAllFollowersByFollowedUserId
 {
-    public sealed class GetAllFollowersByFollowerIdResponse
+    public sealed class GetAllFollowersByFollowedUserIdResponse
     {
-        public GetAllFollowersByFollowerIdResponse()
+        public GetAllFollowersByFollowedUserIdResponse()
         {
             Followers = new List<FollowerResponse>();
         }
@@ -17,9 +18,9 @@ namespace Application.Followers.Queries.GetAllFollowersByUserId
 
     public class FollowerResponse
     {
-        public FollowerResponse(Guid id, string firstName, string lastName, string degree, string profilePicture)
+        public FollowerResponse(Guid followerId, string firstName, string lastName, string degree, string profilePicture)
         {
-            Id = id;
+            Id = followerId;
             FirstName = firstName;
             LastName = lastName;
             Degree = degree;
