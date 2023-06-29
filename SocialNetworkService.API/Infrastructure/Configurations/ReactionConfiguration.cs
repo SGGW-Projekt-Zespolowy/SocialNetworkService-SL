@@ -1,5 +1,6 @@
 ﻿
 using Domain.Entities;
+using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -12,8 +13,7 @@ namespace Infrastructure.Configurations
             builder.ToTable("Reactions");
             builder.HasKey(k => k.Id);
             builder.Property(x => x.ReactionType)
-                .HasConversion(c => c.ToString(),c => 
-                (ReactionTypeEnum)Enum.Parse(typeof(ReactionTypeEnum), c));
+                .HasConversion(c => c.Value, value => ReactionType.Create(value).Value);
         }
     }
 }

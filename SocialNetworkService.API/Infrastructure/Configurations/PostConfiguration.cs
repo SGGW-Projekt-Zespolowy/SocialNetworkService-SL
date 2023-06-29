@@ -13,7 +13,8 @@ namespace Infrastructure.Configurations
             builder.HasKey(k => k.Id);
             builder.Property(p => p.Type).HasConversion(c => c.Value, value => MedicalSpecialization.Create(value).Value);
             builder.Property(p => p.Title).HasConversion(c => c.Value, value => Title.Create(value).Value);
-            builder.HasOne(x => x.Author).WithMany(y => y.Posts).OnDelete(DeleteBehavior.NoAction).HasForeignKey(z => z.AuthorId);
+            builder.HasMany(x => x.Comments).WithOne().HasForeignKey(x => x.ParentPostId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(x => x.Images).WithOne().HasForeignKey(y => y.PostId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

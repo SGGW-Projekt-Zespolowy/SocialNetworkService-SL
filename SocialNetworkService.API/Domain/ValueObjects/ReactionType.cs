@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Primitives;
 using Domain.Shared;
+using ValueObjectErrors = Domain.Errors.DomainErrors.ValueObjects;
 
 namespace Domain.ValueObjects
 {
@@ -18,17 +19,13 @@ namespace Domain.ValueObjects
         {
             yield return Value;
         }
-        public Result<ReactionType> Create(string reactionType)
+        public static Result<ReactionType> Create(string reactionType)
         {
             if (string.IsNullOrEmpty(reactionType))
-                return Result.Failure<ReactionType>(new Error(
-                    "ReactionType.Empty",
-                    "ReactionType is empty."));
+                return Result.Failure<ReactionType>(ValueObjectErrors.ReactionNotFound);
 
             if (!Enum.IsDefined(typeof(ReactionTypeEnum), reactionType))
-                return Result.Failure<ReactionType>(new Error(
-                    "ReactionType.NotDefined",
-                    "ReactionType is not defined."));
+                return Result.Failure<ReactionType>(ValueObjectErrors.ReactionNotDefined);
 
             return new ReactionType(reactionType);
         }

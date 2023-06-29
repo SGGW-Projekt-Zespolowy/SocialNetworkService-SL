@@ -74,9 +74,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CommentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -93,22 +90,15 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("ParentPostId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PublicationId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("RelatedToComment")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Usefull")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentId");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("PublicationId");
+                    b.HasIndex("ParentPostId");
 
                     b.ToTable("Comments", (string)null);
                 });
@@ -141,19 +131,25 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<byte[]>("PasswordHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PasswordSalt")
+                    b.Property<byte[]>("PasswordSalt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Credentials", (string)null);
                 });
@@ -201,6 +197,26 @@ namespace Infrastructure.Migrations
                     b.ToTable("Hashtags", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.Image", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Images", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.Property<Guid>("Id")
@@ -209,6 +225,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("CaseResolved")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -233,6 +252,26 @@ namespace Infrastructure.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("Posts", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.PostBookmark", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "PostId")
+                        .IsUnique();
+
+                    b.ToTable("PostBookmarks", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Publication", b =>
@@ -286,9 +325,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ReactionType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -297,8 +333,6 @@ namespace Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Reactions", (string)null);
                 });
@@ -404,17 +438,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("Domain.Entities.Comment", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("CommentId");
-
                     b.HasOne("Domain.Entities.Post", null)
                         .WithMany("Comments")
-                        .HasForeignKey("PostId");
-
-                    b.HasOne("Domain.Entities.Publication", null)
-                        .WithMany("Comments")
-                        .HasForeignKey("PublicationId");
+                        .HasForeignKey("ParentPostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Contact", b =>
@@ -436,6 +464,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Credentials", b =>
+                {
+                    b.HasOne("Domain.Entities.User", null)
+                        .WithOne("Credentials")
+                        .HasForeignKey("Domain.Entities.Credentials", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.Follower", b =>
                 {
                     b.HasOne("Domain.Entities.User", "FollowedUser")
@@ -455,12 +492,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("FollowerUser");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Image", b =>
+                {
+                    b.HasOne("Domain.Entities.Post", null)
+                        .WithMany("Images")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.HasOne("Domain.Entities.User", "Author")
                         .WithMany("Posts")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -477,13 +523,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Reaction", b =>
-                {
-                    b.HasOne("Domain.Entities.Post", null)
-                        .WithMany("Reactions")
-                        .HasForeignKey("PostId");
-                });
-
             modelBuilder.Entity("Domain.Entities.Specialization", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -495,23 +534,16 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Comment", b =>
-                {
-                    b.Navigation("Comments");
-                });
-
             modelBuilder.Entity("Domain.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("Reactions");
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("Domain.Entities.Publication", b =>
                 {
                     b.Navigation("CoAuthors");
-
-                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -519,6 +551,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Badges");
 
                     b.Navigation("Contacts");
+
+                    b.Navigation("Credentials")
+                        .IsRequired();
 
                     b.Navigation("FollowedByMeUsers");
 

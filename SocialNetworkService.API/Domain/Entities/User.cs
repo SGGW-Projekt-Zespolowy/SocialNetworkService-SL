@@ -32,6 +32,7 @@ namespace Domain.Entities
         public bool IsVerified { get; private set; }
         public string ProfilePicture { get; private set; }
         public DateTime CreationDate { get; init; }
+        public Credentials Credentials { get; }
         public List<Specialization> Specializations { get; } = new List<Specialization>();
         public List<Contact> Contacts { get; } = new List<Contact>();
         public List<Follower> Followers { get; } = new List<Follower>();
@@ -40,13 +41,13 @@ namespace Domain.Entities
         public List<Badge> Badges { get; } = new List<Badge>();
         public List<Follower> FollowedByMeUsers { get; } = new List<Follower>();
        
-        public void Update(Email? email, FirstName? firstName, LastName? lastName, Degree? degree, string profilePicture)
+        public void Update(Email? email, FirstName? firstName, LastName? lastName, Degree? degree, string? profilePicture)
         {
             if (email is not null) Email = email;
             if (firstName is not null) FirstName = firstName;
             if (lastName is not null) LastName = lastName;
             if (degree is not null) Degree = degree;
-            if (profilePicture != string.Empty) ProfilePicture = profilePicture;
+            if (profilePicture is not null) ProfilePicture = profilePicture;
         }
     }
 }

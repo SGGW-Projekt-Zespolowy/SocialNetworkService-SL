@@ -7,7 +7,7 @@ using Domain.ValueObjects;
 
 namespace Application.Users.Commands.CreateUser
 {
-    public sealed class CreateUserCommandHandler: ICommandHandler<CreateUserCommand>
+    public sealed class CreateUserCommandHandler: ICommandHandler<CreateUserCommand,User>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -18,21 +18,29 @@ namespace Application.Users.Commands.CreateUser
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<User>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var id = new Guid();
             var firstName = FirstName.Create(request.firstName);
+            if (firstName.IsFailure)
+                return Result.Failure<User>(firstName.Error);
             var lastName = LastName.Create(request.lastName);
-            var emailResult = Email.Create(request.email);     
-            var degree = Degree.Create(request.degree);            
+            if (lastName.IsFailure)
+                return Result.Failure<User>(lastName.Error);
+            var emailResult = Email.Create(request.email);
+            if (emailResult.IsFailure)
+                return Result.Failure<User>(emailResult.Error);
+            var degree = Degree.Create(request.degree);      
+            if (degree.IsFailure)
+                return Result.Failure<User>(degree.Error);
 
             var user = new User(id,emailResult.Value, firstName.Value, lastName.Value,
-                request.dateOfBirth, degree.Value, request.profilePicture);
+                request.dateOfBirth, degree.Value, string.Empty);
 
             _userRepository.Add(user,cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result.Success();
+            return Result.Success(user);
         }
         
     }

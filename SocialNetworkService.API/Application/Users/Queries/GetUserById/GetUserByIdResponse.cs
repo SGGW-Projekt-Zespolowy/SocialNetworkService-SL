@@ -1,4 +1,6 @@
-﻿namespace Application.Users.Queries.GetUserById
+﻿using Domain.Entities;
+
+namespace Application.Users.Queries.GetUserById
 {
     public record GetUserByIdResponse(
         Guid id,
@@ -9,5 +11,7 @@
         DateTime dateOfBirth,
         string Degree,
         bool isVerified,
-        string profilePictore);
+        List<Specialization> Specializations,
+        string profilePictore
+        );
 }

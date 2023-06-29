@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
+using Domain.Entities;
 
 namespace Application.Users.Commands.CreateUser
 {
@@ -7,7 +8,6 @@ namespace Application.Users.Commands.CreateUser
         string firstName,
         string lastName,
         DateTime dateOfBirth,
-        string degree,
-        string profilePicture
-        ): ICommand;
+        string degree
+        ): ICommand<User>;
 }

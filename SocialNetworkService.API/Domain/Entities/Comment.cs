@@ -1,15 +1,16 @@
 ﻿using Domain.Primitives;
+using Domain.ValueObjects;
 
 namespace Domain.Entities
 {
     public class Comment : AggregateRoot
     {
-        public Comment(Guid id, Guid authorId, string content, DateTime modificationDate, Guid parentPostId, Guid parentCommentId, bool relatedToComment) : base(id)
+        public Comment(Guid id, Guid authorId, string content, Guid parentPostId, Guid parentCommentId, bool relatedToComment) : base(id)
         {
             AuthorId = authorId;
             Content = content;
             CreationDate = DateTime.Now;
-            ModificationDate = modificationDate;
+            ModificationDate = DateTime.Now;
             ParentPostId = parentPostId;
             ParentCommentId = parentCommentId;
             RelatedToComment = relatedToComment;
@@ -21,8 +22,16 @@ namespace Domain.Entities
         public DateTime ModificationDate { get; set; }
         public Guid ParentPostId { get; set; }
         public Guid ParentCommentId { get; set; }
-        public List<Comment> Comments { get; set; }
         public bool RelatedToComment { get; set; }
-        public List<Reaction> Reactions { get; } = new List<Reaction>();
+        public bool Usefull { get; private set; }
+
+        public void Update(Content? content, bool? usefull)
+        {
+            if (content is not null) Content = content;
+            if (usefull is not null) Usefull = usefull.Value;
+            ModificationDate = DateTime.Now;
+        }
+
+        public void CheckCommentUsefull() => Usefull = !Usefull;
     }
 }

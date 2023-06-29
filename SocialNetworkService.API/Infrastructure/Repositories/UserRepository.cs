@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Domain.ValueObjects;
 using Infrastructure.Specifications;
 using Infrastructure.Specifications.User;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,9 @@ namespace Infrastructure.Repositories
         {
             _dbContext.Set<User>().Add(user);
         }
+
+        public async Task<User?> GetByEmailAsync(Email email, CancellationToken cancellationToken)
+        => await ApplySpecification(new UserByEmailSpecification(email)).FirstOrDefaultAsync(cancellationToken);
 
         public async Task<User?> GetByFullNameAsync(string fullName, CancellationToken cancellationToken)
         => await ApplySpecification(new UserByFullNameSpecification(fullName)).FirstOrDefaultAsync(cancellationToken);

@@ -6,25 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Credentials",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Credentials", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Hashtags",
                 columns: table => new
@@ -36,6 +22,20 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Hashtags", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reactions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ReactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RelatedItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reactions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,6 +101,27 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Credentials",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Credentials", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Credentials_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Followers",
                 columns: table => new
                 {
@@ -142,7 +163,8 @@ namespace Infrastructure.Migrations
                         name: "FK_Posts_Users_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,23 +210,46 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reactions",
+                name: "Comments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ReactionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RelatedItemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModificationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ParentPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParentCommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RelatedToComment = table.Column<bool>(type: "bit", nullable: false),
+                    Usefull = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reactions", x => x.Id);
+                    table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reactions_Posts_PostId",
-                        column: x => x.PostId,
+                        name: "FK_Comments_Posts_ParentPostId",
+                        column: x => x.ParentPostId,
                         principalTable: "Posts",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,42 +276,6 @@ namespace Infrastructure.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModificationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ParentPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ParentCommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RelatedToComment = table.Column<bool>(type: "bit", nullable: false),
-                    CommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PublicationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_Comments_CommentId",
-                        column: x => x.CommentId,
-                        principalTable: "Comments",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Comments_Posts_PostId",
-                        column: x => x.PostId,
-                        principalTable: "Posts",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Comments_Publications_PublicationId",
-                        column: x => x.PublicationId,
-                        principalTable: "Publications",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Badges_AuthorId_Name",
                 table: "Badges",
@@ -285,19 +294,9 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_CommentId",
+                name: "IX_Comments_ParentPostId",
                 table: "Comments",
-                column: "CommentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_PostId",
-                table: "Comments",
-                column: "PostId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_PublicationId",
-                table: "Comments",
-                column: "PublicationId");
+                column: "ParentPostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contacts_ContactId",
@@ -308,6 +307,12 @@ namespace Infrastructure.Migrations
                 name: "IX_Contacts_UserId_ContactId",
                 table: "Contacts",
                 columns: new[] { "UserId", "ContactId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Credentials_UserId",
+                table: "Credentials",
+                column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -328,6 +333,11 @@ namespace Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Images_PostId",
+                table: "Images",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_AuthorId",
                 table: "Posts",
                 column: "AuthorId");
@@ -336,11 +346,6 @@ namespace Infrastructure.Migrations
                 name: "IX_Publications_AuthorId",
                 table: "Publications",
                 column: "AuthorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Reactions_PostId",
-                table: "Reactions",
-                column: "PostId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Specializations_AuthorId",
@@ -377,6 +382,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Hashtags");
+
+            migrationBuilder.DropTable(
+                name: "Images");
 
             migrationBuilder.DropTable(
                 name: "Reactions");
