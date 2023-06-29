@@ -25,11 +25,11 @@ namespace Application.Users.Commands.UpdateUser
                 return Result.Failure(Domain.Errors.ApplicationErrors.User.UserNotFound(request.userId));
             }
 
-            string? dbImage = null;
-            if (request.image is not null)
-                dbImage = Image.Encode(request.image, Guid.Empty).Value.Data;
+            //string? dbImage = null;
+            //if (request.image is not null)
+            //    dbImage = Image.Encode(request.image, Guid.Empty).Value.Data;
 
-            user.Update(null,null,null,null,dbImage);
+            user.Update(null,null,null,null,request.image);
             _userRepository.Update(user, cancellationToken);
             await _unitOfWork.SaveChangesAsync();
 

@@ -22,11 +22,9 @@ namespace Application.Users.Queries.GetUserById
                 return Result.Failure<GetUserByIdResponse>(Domain.Errors.ApplicationErrors.User.UserNotFound(request.userId));
             }
 
-            var imageData = string.Format("data:image/png;base64,{0}", user.ProfilePicture);
-
             var response = new GetUserByIdResponse(
                 user.Id, user.Email, user.LastLoginDate, user.FirstName, user.LastName,
-                user.DateOfBirth, user.Degree, user.IsVerified, user.Specializations, imageData);
+                user.DateOfBirth, user.Degree, user.IsVerified, user.Specializations, user.ProfilePicture);
             return Result.Success(response);
         }
     }
