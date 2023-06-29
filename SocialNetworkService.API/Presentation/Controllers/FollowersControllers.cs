@@ -1,10 +1,8 @@
-﻿using Application.Contacts.Commands.AddContact;
-using Application.Contacts.Commands.DeleteContact;
-using Application.Contacts.Queries.GetAllContactsByUserId;
+﻿using Application.Contacts.Queries.GetAllContactsByUserId;
 using Application.Followers.Commands.AddFollower;
 using Application.Followers.Commands.DeleteFollower;
-using Application.Followers.Queries.GetAllFollowersByUserId;
-using Application.Posts.Queries.Get;
+using Application.Followers.Queries.GetAllFollowedUsersByFollowerId;
+using Application.Followers.Queries.GetAllFollowersByFollowedUserId;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -39,12 +37,23 @@ namespace Presentation.Controllers
             return response.IsSuccess ? Ok() : NotFound(response.Error);
         }       
 
-        [HttpGet()]
-        [ProducesResponseType(typeof(GetAllContactsByUserIdResponse), StatusCodes.Status200OK)]
+        [HttpGet("followedUsers")]
+        [ProducesResponseType(typeof(GetAllFollowedUsersByFollowerIdResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAllFollowersByFollowerId([FromQuery] Guid followerId, [FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllFollowedUsersByFollowerId([FromQuery] Guid followerId, [FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
         {
-            var query = new GetAllFollowersByFollowerIdQuery(followerId, page, pageSize);
+            var query = new GetAllFollowedUsersByFollowerIdQuery(followerId, page, pageSize);
+            var response = await Sender.Send(query, cancellationToken);
+
+            return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
+        }
+
+        [HttpGet("followers")]
+        [ProducesResponseType(typeof(GetAllFollowersByFollowedUserIdResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAllFollowersByFollowedUserId([FromQuery] Guid followedUserId, [FromQuery] int page, [FromQuery] int pageSize, CancellationToken cancellationToken)
+        {
+            var query = new GetAllFollowersByFollowedUserIdQuery(followedUserId, page, pageSize);
             var response = await Sender.Send(query, cancellationToken);
 
             return response.IsSuccess ? Ok(response.Value) : NotFound(response.Error);
