@@ -106,7 +106,7 @@ namespace Presentation.Controllers
         [HttpPut("user/profilePicture")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateUsersProfilePic([FromForm] UpdateUserProfilePicCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUsersProfilePic([FromBody] UpdateUserProfilePicCommand command, CancellationToken cancellationToken)
         {
             var result = await Sender.Send(command, cancellationToken);
             return result.IsSuccess ? Ok() : NotFound(result.Error);
