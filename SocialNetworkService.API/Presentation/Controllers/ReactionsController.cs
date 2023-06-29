@@ -3,12 +3,13 @@ using Application.Reactions.Commands.DeleteReaction;
 using Application.Reactions.Commands.UpdateReaction;
 using Application.Reactions.Queries.GetReactionsByRelatedItem;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/reactions")]
     public sealed class ReactionsController : ApiController

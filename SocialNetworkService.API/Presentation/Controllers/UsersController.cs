@@ -97,12 +97,12 @@ namespace Presentation.Controllers
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
         {
             var command = new UpdateUserCommand(request.UserId, request.Email, request.FirstName, request.LastName,
-                request.Degree);
+                request.Degree, request.ProfilePic);
             var result = await Sender.Send(command,cancellationToken);
             return result.IsSuccess ? Ok() : NotFound(result.Error);
         }
             
-        //[Authorize]
+        [Authorize]
         [HttpPut("user/profilePicture")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
