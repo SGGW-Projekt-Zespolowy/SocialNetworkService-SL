@@ -8,6 +8,8 @@ namespace Domain.Errors
         public static class General
         {
             public static readonly Error NullRequest = new Error("Request.IsNull", "Your request is null");
+            public static readonly Error NullObject = new Error("Object.IsNull", "Your object is null");
+            public static readonly Error BadRequest = new Error("BadRequest", "Your request is invalid");
         }
         public static class PostBookmark
         {
@@ -52,7 +54,8 @@ namespace Domain.Errors
 
         public static class Reaction
         {
-            public static Error ReactionNotFound(Guid reactionId) => new Error("Reaction.NotFound", $"Reaction with id {reactionId} was not found.");
+            public static Error ReactionNotFound(Guid userId) => new Error("Reaction.NotFound", $"Reaction with userId= {userId} was not found.");
+            public static Error ReactionAlreadyExists(Guid postId) => new Error("Reaction.AlreadyExists", $"Reaction for post= {postId} already exists.");
             public static readonly Error NoReactionsFound = new Error("NoReactionsFound", "There are no reactions");
         }
 

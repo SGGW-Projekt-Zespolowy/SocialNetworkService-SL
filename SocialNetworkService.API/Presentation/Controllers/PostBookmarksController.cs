@@ -47,6 +47,6 @@ namespace Presentation.Controllers
             var result = await Sender.Send(query, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : BadRequest(result?.Error);
-        }
+        }        
     }
 }

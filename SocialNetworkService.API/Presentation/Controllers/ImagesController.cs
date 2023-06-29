@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/images")]
     public sealed class ImagesController: ApiController

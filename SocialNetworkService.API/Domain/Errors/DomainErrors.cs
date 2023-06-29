@@ -35,7 +35,11 @@ namespace Domain.Errors
             public static readonly Error TitleNotFound = new Error("Title.NotFound", "Title is empty.");
             public static readonly Error TitleIsInvalid = new Error("Title.Invalid", "Title is invalid.");
             public static readonly Error TitleTooLong = new Error("Title.TooLong", "Title is too long.");
-            public static readonly Error TypeIsInvalid = new Error("Type.Invalid", "Type is invalid.");
+            public static readonly Error TypeIsInvalid = new Error("Type.Invalid", "Type is invalid.");            
+        }
+        public static class Image
+        {
+            public static readonly Error InvalidImageData = new Error("Image.IsInvalid", "Your input image is invalid");
         }
     }
 }

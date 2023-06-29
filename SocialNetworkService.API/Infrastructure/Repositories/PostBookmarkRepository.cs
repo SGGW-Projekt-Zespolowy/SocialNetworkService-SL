@@ -1,5 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Infrastructure.Specifications;
+using Infrastructure.Specifications.PostBookmark;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
@@ -31,9 +33,16 @@ namespace Infrastructure.Repositories
                 _dbContext.Remove(postBookmark);
         }
 
-        public async Task<PostBookmark?> GetById(Guid postBookmarkId, CancellationToken cancellationToken)
+        public async Task<PostBookmark?> GetByIdAsync(Guid postBookmarkId, CancellationToken cancellationToken)
         {
             return await _dbContext.Set<PostBookmark>().FirstOrDefaultAsync(x => x.Id == postBookmarkId);
         }
+        public IQueryable<PostBookmark> ApplySpecification(Specification<PostBookmark> specification)
+        {
+            return SpecificationEvaluator.GetQuery(_dbContext.Set<PostBookmark>(), specification);
+        }
+
+        public async Task<List<PostBookmark>> GetAllByPostIdsAsync(List<Guid> postIds, CancellationToken cancellationToken)
+            => await ApplySpecification(new PostBookmarkByPostsIdsSpecification(postIds)).ToListAsync(cancellationToken);
     }
 }

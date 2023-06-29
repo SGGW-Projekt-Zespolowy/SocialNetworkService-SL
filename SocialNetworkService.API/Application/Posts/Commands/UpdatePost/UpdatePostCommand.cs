@@ -1,5 +1,4 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.ValueObjects;
 
 namespace Application.Posts.Commands.UpdatePost
 {

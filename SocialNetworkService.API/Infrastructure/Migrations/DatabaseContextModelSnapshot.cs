@@ -497,7 +497,7 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Post", null)
                         .WithMany("Images")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

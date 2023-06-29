@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions;
 using Application.Abstractions.Messaging;
+using Domain.Entities;
 using Domain.Repositories;
 using Domain.Shared;
 using Domain.ValueObjects;
@@ -11,15 +12,19 @@ namespace Application.Posts.Commands.UpdatePost
     {
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IImageRepository _imageRepository;
+        private readonly IHashtagRepository hashtagRepository;
 
-        public UpdatePostCommandHandler(IPostRepository postRepository, IUnitOfWork unitOfWork)
+        public UpdatePostCommandHandler(IPostRepository postRepository, IUnitOfWork unitOfWork, IImageRepository imageRepository, IHashtagRepository hashtagRepository)
         {
             _postRepository = postRepository;
             _unitOfWork = unitOfWork;
+            _imageRepository = imageRepository;
+            this.hashtagRepository = hashtagRepository;
         }
 
         public async Task<Result> Handle(UpdatePostCommand request, CancellationToken cancellationToken)
-        {
+        {            
             var post = await _postRepository.GetByIdAsync(request.postId, cancellationToken);
             if (post is null)
             {
@@ -36,6 +41,7 @@ namespace Application.Posts.Commands.UpdatePost
 
             post.Update(content?.Value, type?.Value, title?.Value, request.caseResolved);
             _postRepository.Update(post, cancellationToken);
+
             await _unitOfWork.SaveChangesAsync();
 
             return Result.Success();

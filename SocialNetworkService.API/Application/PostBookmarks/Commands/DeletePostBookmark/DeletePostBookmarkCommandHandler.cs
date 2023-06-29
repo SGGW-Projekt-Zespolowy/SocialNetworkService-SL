@@ -18,7 +18,7 @@ namespace Application.PostBookmarks.Commands.DeletePostBookmark
 
         public async Task<Result> Handle(DeletePostBookmarkCommand request, CancellationToken cancellationToken)
         {
-            var postBookmark = await _postBookmarkRepository.GetById(request.postBookmarkId, cancellationToken);
+            var postBookmark = await _postBookmarkRepository.GetByIdAsync(request.postBookmarkId, cancellationToken);
             if (postBookmark is null)
                 return Result.Failure(Domain.Errors.ApplicationErrors.PostBookmark.BookmarkNotFound);
 

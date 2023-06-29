@@ -6,6 +6,7 @@ namespace Domain.Repositories
     {
         Task<Publication?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
         Task<Publication?> GetByIdWithAllAsync(Guid id, CancellationToken cancellationToken);
+        Task<List<Publication>> GetByUserIdWithAllAsync(Guid userId, CancellationToken cancellationToken);
         void Add(Publication publication, CancellationToken cancellationToken);
         void Remove(Publication publication, CancellationToken cancellationToken);
         void Update(Publication publication, CancellationToken cancellationToken);

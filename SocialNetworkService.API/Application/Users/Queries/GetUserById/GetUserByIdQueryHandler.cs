@@ -1,5 +1,4 @@
-﻿using Application.Abstractions;
-using Application.Abstractions.Messaging;
+﻿using Application.Abstractions.Messaging;
 using Domain.Repositories;
 using Domain.Shared;
 
@@ -8,12 +7,10 @@ namespace Application.Users.Queries.GetUserById
     public class GetUserByIdQueryHandler : IQueryHandler<GetUserByIdQuery, GetUserByIdResponse>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public GetUserByIdQueryHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public GetUserByIdQueryHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _unitOfWork = unitOfWork;
         }
 
         public async Task<Result<GetUserByIdResponse>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
@@ -25,9 +22,11 @@ namespace Application.Users.Queries.GetUserById
                 return Result.Failure<GetUserByIdResponse>(Domain.Errors.ApplicationErrors.User.UserNotFound(request.userId));
             }
 
+            var imageData = string.Format("data:image/png;base64,{0}", user.ProfilePicture);
+
             var response = new GetUserByIdResponse(
                 user.Id, user.Email, user.LastLoginDate, user.FirstName, user.LastName,
-                user.DateOfBirth, user.Degree, user.IsVerified, user.ProfilePicture,user.Specializations);
+                user.DateOfBirth, user.Degree, user.IsVerified, user.Specializations, imageData);
             return Result.Success(response);
         }
     }

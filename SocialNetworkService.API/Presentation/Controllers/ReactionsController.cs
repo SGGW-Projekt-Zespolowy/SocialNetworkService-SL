@@ -1,23 +1,14 @@
-﻿using Application.Posts.Commands.CreatePost;
-using Application.Posts.Commands.UpdatePost;
-using Application.Reactions.Commands.AddReaction;
+﻿using Application.Reactions.Commands.AddReaction;
 using Application.Reactions.Commands.DeleteReaction;
 using Application.Reactions.Commands.UpdateReaction;
 using Application.Reactions.Queries.GetReactionsByRelatedItem;
-using Application.Users.Commands.DeleteUser;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Presentation.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/reactions")]
     public sealed class ReactionsController : ApiController

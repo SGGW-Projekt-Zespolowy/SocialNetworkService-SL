@@ -94,12 +94,24 @@ namespace Presentation.Controllers
         [HttpPut("user")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
         {
+            var command = new UpdateUserCommand(request.UserId, request.Email, request.FirstName, request.LastName,
+                request.Degree);
             var result = await Sender.Send(command,cancellationToken);
             return result.IsSuccess ? Ok() : NotFound(result.Error);
         }
-                
+            
+        //[Authorize]
+        [HttpPut("user/profilePicture")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateUsersProfilePic([FromForm] UpdateUserProfilePicCommand command, CancellationToken cancellationToken)
+        {
+            var result = await Sender.Send(command, cancellationToken);
+            return result.IsSuccess ? Ok() : NotFound(result.Error);
+        }
+
         [HttpPost("user/login")]
         [ProducesResponseType(typeof(string),StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

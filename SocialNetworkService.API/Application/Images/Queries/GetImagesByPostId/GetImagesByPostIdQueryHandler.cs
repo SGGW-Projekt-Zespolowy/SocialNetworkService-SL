@@ -27,9 +27,11 @@ namespace Application.Images.Queries.GetImagesByPostId
             var response = new GetImagesByPostIdQueryResponse(new List<ImageResponse> { });
             foreach(var image in images)
             {
-                var imageData = string.Format("data:image/png;base64,{0}",image.Data);
-                var readableData = new ImageResponse(imageData, image.PostId, image.Id);
-                response.Add(readableData);
+                var readableData = ImageResponse.Decode(image);
+                if (readableData.IsFailure)
+                    return Result.Failure<GetImagesByPostIdQueryResponse>(readableData.Error);
+
+                response.Add(readableData.Value);
             }
             
             return response;

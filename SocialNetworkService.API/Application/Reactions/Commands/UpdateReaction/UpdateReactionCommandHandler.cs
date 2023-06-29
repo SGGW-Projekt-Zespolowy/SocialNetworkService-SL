@@ -19,18 +19,18 @@ namespace Application.Reactions.Commands.UpdateReaction
         }
         public async Task<Result> Handle(UpdateReactionCommand request, CancellationToken cancellationToken)
         {
-            var reaction = await _reactionRepository.GetByIdAsync(request.id, cancellationToken);
+            var reaction = await _reactionRepository.GetByPostIdAndAuthorIdAsync(request.relatedItemId, request.authorId, cancellationToken);
 
             if (reaction is null)
             {
-                return Result.Failure(Domain.Errors.ApplicationErrors.Reaction.ReactionNotFound(request.id));
+                return Result.Failure(Domain.Errors.ApplicationErrors.Reaction.ReactionNotFound(request.authorId));
             }
 
             var reactionType = request.reactionType != string.Empty ? ReactionType.Create(request.reactionType) : null;
 
             if (reactionType is not null && reactionType.IsFailure) return Result.Failure(ValueObjectErrors.ReactionNotDefined);
 
-            reaction.Update(reactionType.Value);
+            reaction.Update(reactionType?.Value);
 
             await _unitOfWork.SaveChangesAsync();
 
