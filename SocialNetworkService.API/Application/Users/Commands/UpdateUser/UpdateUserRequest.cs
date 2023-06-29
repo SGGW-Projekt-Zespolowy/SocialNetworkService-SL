@@ -4,7 +4,7 @@ namespace Application.Users.Commands.UpdateUser
 {
     public sealed class UpdateUserRequest
     {
-        public UpdateUserRequest(Guid userId, string email, string firstName, string lastName, string degree, string profilePic)
+        public UpdateUserRequest(Guid userId, string email, string firstName, string lastName, string degree)
         {
             UserId = userId;
             Email = email;
@@ -18,6 +18,5 @@ namespace Application.Users.Commands.UpdateUser
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string Degree { get; private set; }
-        public string ProfilePic { get; private set; }
     }
 }

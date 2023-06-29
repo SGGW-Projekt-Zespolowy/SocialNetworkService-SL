@@ -97,7 +97,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
         {
             var command = new UpdateUserCommand(request.UserId, request.Email, request.FirstName, request.LastName,
-                request.Degree, request.ProfilePic);
+                request.Degree, string.Empty);
             var result = await Sender.Send(command,cancellationToken);
             return result.IsSuccess ? Ok() : NotFound(result.Error);
         }
