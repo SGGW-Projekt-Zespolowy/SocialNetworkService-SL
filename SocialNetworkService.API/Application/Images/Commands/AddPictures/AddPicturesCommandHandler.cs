@@ -27,18 +27,11 @@ namespace Application.Images.Commands.AddPicture
 
             foreach (var file in request.images)
             {
-                if (file.Length > 0)
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        file.CopyTo(ms);
-                        var fileBytes = ms.ToArray();
-                        var base64 = Convert.ToBase64String(fileBytes);
+                var image = Image.Encode(file, request.postId);
+                if (image.IsFailure)
+                    return Result.Failure(image.Error);
 
-                        var image = new Image(Guid.NewGuid(), base64, request.postId);
-                        _imageRepository.Add(image, cancellationToken);
-                    }
-                }
+                _imageRepository.Add(image.Value, cancellationToken);
             }
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

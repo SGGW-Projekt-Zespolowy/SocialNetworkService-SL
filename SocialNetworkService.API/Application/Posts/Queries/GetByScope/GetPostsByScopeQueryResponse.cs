@@ -1,10 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Posts.Queries.GetByScope
 {
@@ -19,7 +13,9 @@ namespace Application.Posts.Queries.GetByScope
 
     public class PostResponse
     {
-        public PostResponse(Guid id, Guid authorId, string content, DateTime creationDate, string type, string title, List<Comment> comments)
+        public PostResponse(Guid id, Guid authorId, string content, DateTime creationDate, string type,
+            string title, List<Comment> comments, List<Hashtag> hashtags, bool isUp, bool isDown,
+            bool isBookmarked, int reactionsCount, List<Image> images)
         {
             Id = id;
             AuthorId = authorId;
@@ -28,6 +24,12 @@ namespace Application.Posts.Queries.GetByScope
             Type = type;
             Title = title;
             Comments = comments;
+            Hashtags = hashtags;
+            IsUp = isUp;
+            IsDown = isDown;
+            IsBookmarked = isBookmarked;
+            ReactionsCount = reactionsCount;
+            Images = images;
         }
         public Guid Id { get; set; }
         public Guid AuthorId { get; set; }
@@ -37,5 +39,11 @@ namespace Application.Posts.Queries.GetByScope
         public string Type { get; set; }
         public string Title { get; set; }
         public List<Comment> Comments { get; } = new List<Comment>();
+        public List<Hashtag> Hashtags { get; private set; }
+        public List<Image> Images { get; private set; }
+        public bool IsUp { get; private set; }
+        public bool IsDown { get; private set; }
+        public bool IsBookmarked { get; private set; }
+        public int ReactionsCount { get; private set; } 
     }
 }

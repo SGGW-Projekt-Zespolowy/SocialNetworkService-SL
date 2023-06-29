@@ -19,6 +19,10 @@ namespace Application.Reactions.Commands.AddReaction
         }
         public async Task<Result> Handle(AddReactionCommand request, CancellationToken cancellationToken)
         {
+            var dbReaction = _reactionRepository.GetByPostIdAndAuthorIdAsync(request.relatedItemId,request.authorId,cancellationToken);
+            if (dbReaction is not null)
+                return Result.Failure(Domain.Errors.ApplicationErrors.Reaction.ReactionAlreadyExists(request.relatedItemId));
+
             var id = new Guid();
             var reactionType = ReactionType.Create(request.reactionType);
             if (reactionType.IsFailure)

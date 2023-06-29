@@ -16,9 +16,9 @@ namespace Domain.Entities
         public Guid RelatedItemId { get; set; }
         public Guid AuthorId { get; set; }
 
-        public void Update(ReactionType reactionType)
+        public void Update(ReactionType? reactionType)
         {
-            ReactionType = reactionType;
+            if(reactionType is not null) ReactionType = reactionType;
         }
     }
 }

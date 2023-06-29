@@ -11,6 +11,7 @@ namespace Application.Users.Queries.GetUserById
         DateTime dateOfBirth,
         string Degree,
         bool isVerified,
-        string profilePictore,
-        List<Specialization> Specializations);
+        List<Specialization> Specializations,
+        string profilePictore
+        );
 }

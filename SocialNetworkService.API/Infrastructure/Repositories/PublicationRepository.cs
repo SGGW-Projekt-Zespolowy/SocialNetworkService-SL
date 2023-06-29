@@ -1,11 +1,12 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Specifications;
+using Infrastructure.Specifications.Publication;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    internal class PublicationRepository : IPublicationRepository
+    public sealed class PublicationRepository : IPublicationRepository
     {
         private readonly DatabaseContext _dbContext;
 
@@ -24,6 +25,9 @@ namespace Infrastructure.Repositories
 
         public async Task<Publication?> GetByIdWithAllAsync(Guid id, CancellationToken cancellationToken)
             => await ApplySpecification(new PublicationByIdIncludeAllSpecification(id)).FirstOrDefaultAsync(cancellationToken);
+
+        public async Task<List<Publication>> GetByUserIdWithAllAsync(Guid userId, CancellationToken cancellationToken)
+            => await ApplySpecification(new PublicationByUseriIdSpecification(userId)).ToListAsync(cancellationToken);
 
         public IQueryable<Publication> ApplySpecification(Specification<Publication> specification)
         {

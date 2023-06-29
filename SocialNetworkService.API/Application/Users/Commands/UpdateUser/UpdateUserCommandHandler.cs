@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions;
 using Application.Abstractions.Messaging;
+using Domain.Entities;
 using Domain.Repositories;
 using Domain.Shared;
 using Domain.ValueObjects;
@@ -29,15 +30,14 @@ namespace Application.Users.Commands.UpdateUser
             var email = request.email != string.Empty ? Email.Create(request.email) : null;
             var firstName = request.firstName != string.Empty ? FirstName.Create(request.firstName) : null;
             var lastName = request.lastName != string.Empty ? LastName.Create(request.lastName) : null;
-            var degree = request.degree != string.Empty ? Degree.Create(request.degree) : null;
-            var profilePicture = request.profilePicture != string.Empty ? request.profilePicture : string.Empty;
+            var degree = request.degree != string.Empty ? Degree.Create(request.degree) : null;            
 
             if (email is not null && email.IsFailure) return Result.Failure(ValueObjectErrors.EmailIsInvalid);
             if (firstName is not null && firstName.IsFailure) return Result.Failure(ValueObjectErrors.FirstNameIsInvalid);
             if (lastName is not null && lastName.IsFailure) return Result.Failure(ValueObjectErrors.LastNameIsInvalid);
             if (degree is not null && degree.IsFailure) return Result.Failure(ValueObjectErrors.DegreeNotDefined);
-
-            user.Update(email?.Value, firstName?.Value, lastName?.Value, degree?.Value, profilePicture);
+            
+            user.Update(email?.Value, firstName?.Value, lastName?.Value, degree?.Value, null);
             _userRepository.Update(user, cancellationToken);
             await _unitOfWork.SaveChangesAsync();
 

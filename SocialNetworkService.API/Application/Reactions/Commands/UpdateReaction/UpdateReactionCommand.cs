@@ -2,5 +2,5 @@
 
 namespace Application.Reactions.Commands.UpdateReaction
 {
-    public sealed record UpdateReactionCommand(Guid id, string reactionType) : ICommand;
+    public sealed record UpdateReactionCommand(Guid relatedItemId, Guid authorId, string reactionType) : ICommand;
 }

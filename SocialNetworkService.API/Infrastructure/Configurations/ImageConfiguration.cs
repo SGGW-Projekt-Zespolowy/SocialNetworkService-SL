@@ -9,8 +9,7 @@ namespace Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Image> builder)
         {
             builder.ToTable("Images");
-            builder.HasKey(x => x.Id);
-            builder.HasOne<Post>().WithMany(y => y.Images).HasForeignKey(x => x.PostId);
+            builder.HasKey(x => x.Id);            
         }
     }
 }
